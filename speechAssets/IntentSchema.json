@@ -1,0 +1,40 @@
+{
+  "intents": [
+    {
+      "intent": "Retrieve"
+    },
+    {
+      "intent": "RetrieveNext"
+    },
+    {
+      "intent": "ReadArticleFromIndex",
+      "slots": [
+        {
+          "name": "Number",
+          "type": "AMAZON.NUMBER"
+        }
+      ]
+    },
+    {
+      "intent": "ReadRandomArticle"
+    },
+    {
+      "intent": "LinkAccount"
+    },
+    {
+      "intent": "AMAZON.YesIntent"
+    },
+    {
+      "intent": "AMAZON.NoIntent"
+    },
+    {
+      "intent": "AMAZON.HelpIntent"
+    },
+    {
+      "intent": "AMAZON.StopIntent"
+    },
+    {
+      "intent": "AMAZON.CancelIntent"
+    }
+  ]
+}

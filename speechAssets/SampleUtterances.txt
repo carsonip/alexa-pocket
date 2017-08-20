@@ -1,0 +1,24 @@
+Retrieve retrieve
+Retrieve get my list of saved articles
+Retrieve retrieve my list of saved articles
+Retrieve get my list of articles
+Retrieve retrieve my list of articles
+Retrieve my list of saved articles
+Retrieve my list of articles
+Retrieve my articles
+Retrieve retrieve my articles
+Retrieve what articles do i have
+Retrieve what articles i have
+RetrieveNext next
+ReadArticleFromIndex {Number}
+ReadArticleFromIndex number {Number}
+ReadRandomArticle read me an article
+ReadRandomArticle read me a random article
+ReadRandomArticle an article
+LinkAccount link my pocket account
+LinkAccount link my account
+LinkAccount link to my account
+LinkAccount link to my pocket account
+LinkAccount link to my pocket
+LinkAccount link to pocket
+LinkAccount link account
