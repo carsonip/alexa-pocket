@@ -74,7 +74,7 @@ function readList(count, offset, tag) {
     }
     pocket.getList(this.event.session.user.accessToken, count, offset, tag)
         .then((list) => {
-            this.attributes['retrieveOffset'] = (this.attributes['retrieveOffset'] || 0) + count
+            this.attributes['retrieveOffset'] = offset + list.length
             this.attributes['list'] = list;
             this.attributes['tag'] = tag;
 
