@@ -32,12 +32,12 @@ function Pocket() {
         return p;
     };
 
-    this.getList = function (accessToken, count, offset) {
+    this.getList = function (accessToken, count, offset, tag) {
 
         offset = offset || 0;
 
         let p = new Promise((resolve, reject) => {
-            instance.post('v3/get', {
+            let data = {
                 consumer_key: CONSUMER_KEY,
                 access_token: accessToken,
                 count: count,
@@ -45,7 +45,9 @@ function Pocket() {
                 contentType: 'article',
                 sort: 'newest',
                 detailType: 'simple'
-            })
+            };
+            if (tag) data.tag = tag;
+            instance.post('v3/get', data)
                 .then((response) => {
                     let list = utils.objToArr(response.data.list);
 

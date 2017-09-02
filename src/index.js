@@ -67,24 +67,28 @@ function readChunk(before) {
     this.emit(':ask', speechOutput, reprompt);
 }
 
-function readList(count, offset) {
+function readList(count, offset, tag) {
     if (this.event.session.user.accessToken == undefined) {
         linkAccount.call(this);
         return;
     }
-    pocket.getList(this.event.session.user.accessToken, count, offset)
+    pocket.getList(this.event.session.user.accessToken, count, offset, tag)
         .then((list) => {
             this.attributes['retrieveOffset'] = (this.attributes['retrieveOffset'] || 0) + count
             this.attributes['list'] = list;
+            this.attributes['tag'] = tag;
 
             if (list.length === 0) {
-                this.emit(':tell', 'Your Pocket is empty. Try saving some articles to Pocket.');
+                if (tag) this.emit(':tell', `There are no articles with tag ${tag}.`);
+                else this.emit(':tell', 'Your Pocket is empty. Try saving some articles to Pocket.');
                 return;
             }
 
             let titles = list.map((item) => item.resolved_title).map(utils.ssmlEscape);
 
-            let titlesJoined = titles.reduce((prev, item, i) => prev + '<break time="1s"/>' + (i + 1) + ": " + item, `Here are ${list.length} of your saved articles in Pocket:`);
+            let titlesJoined = titles.reduce((prev, item, i) =>
+                prev + '<break time="1s"/>' + (i + 1) + ": " + item, `Here are ${list.length} of your saved articles in Pocket${tag?' with tag ' + tag:''}:`
+            );
 
             let speechOutput = '';
             speechOutput += titlesJoined + '<break time="1s"/> Which one would you like to read? Say the number, or say, next, to read the next in list.';
@@ -175,13 +179,16 @@ var handlers = {
     'Retrieve': function () {
         readList.call(this, RETURN_COUNT, 0);
     },
+    'RetrieveWithTag': function () {
+        readList.call(this, RETURN_COUNT, 0, this.event.request.intent.slots.Tag.value);
+    },
     'RetrieveNext': function () {
-        readList.call(this, RETURN_COUNT, this.attributes['retrieveOffset']);
+        readList.call(this, RETURN_COUNT, this.attributes['retrieveOffset'], this.attributes['tag']);
     },
     'ReadArticleFromIndex': function () {
         readArticleFromIndex.call(this, this.event.request.intent.slots.Number.value - 1);
     },
-    'ReadRandomArticle': function() {
+    'ReadRandomArticle': function () {
         readRandomArticle.call(this)
     },
     'Archive': function () {
