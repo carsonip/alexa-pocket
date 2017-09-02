@@ -72,6 +72,9 @@ function readList(count, offset, tag) {
         linkAccount.call(this);
         return;
     }
+
+    let next = offset > 0;
+
     pocket.getList(this.event.session.user.accessToken, count, offset, tag)
         .then((list) => {
             this.attributes['retrieveOffset'] = offset + list.length
@@ -79,15 +82,21 @@ function readList(count, offset, tag) {
             this.attributes['tag'] = tag;
 
             if (list.length === 0) {
-                if (tag) this.emit(':tell', `There are no articles with tag ${tag}.`);
-                else this.emit(':tell', 'Your Pocket is empty. Try saving some articles to Pocket.');
+                if (next) {
+                    this.emit(':tell', `There are no more articles in list.`);
+                } else {
+                    if (tag) this.emit(':tell', `There are no articles with tag ${tag}.`);
+                    else this.emit(':tell', 'Your Pocket is empty. Try saving some articles to Pocket.');
+                }
                 return;
             }
 
             let titles = list.map((item) => item.resolved_title).map(utils.ssmlEscape);
 
+            let opening = !next ? `Here are ${list.length} of your saved articles in Pocket${tag ? ' with tag ' + tag : ''}:` : `Here are the next ${list.length}:`;
+
             let titlesJoined = titles.reduce((prev, item, i) =>
-                prev + '<break time="1s"/>' + (i + 1) + ": " + item, `Here are ${list.length} of your saved articles in Pocket${tag?' with tag ' + tag:''}:`
+                prev + '<break time="1s"/>' + (i + 1) + ": " + item, opening
             );
 
             let speechOutput = '';
