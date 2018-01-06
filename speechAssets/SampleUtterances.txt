@@ -9,17 +9,6 @@ Retrieve my articles
 Retrieve retrieve my articles
 Retrieve what articles do i have
 Retrieve what articles i have
-RetrieveWithTag retrieve with tag {tag|Tag}
-RetrieveWithTag get my list of saved articles with tag {tag|Tag}
-RetrieveWithTag retrieve my list of saved articles with tag {tag|Tag}
-RetrieveWithTag get my list of articles with tag {tag|Tag}
-RetrieveWithTag retrieve my list of articles with tag {tag|Tag}
-RetrieveWithTag my list of saved articles with tag {tag|Tag}
-RetrieveWithTag my list of articles with tag {tag|Tag}
-RetrieveWithTag my articles with tag {tag|Tag}
-RetrieveWithTag retrieve my articles with tag {tag|Tag}
-RetrieveWithTag what articles do i have with tag {tag|Tag}
-RetrieveWithTag what articles i have with tag {tag|Tag}
 RetrieveNext next
 ReadArticleFromIndex {Number}
 ReadArticleFromIndex number {Number}

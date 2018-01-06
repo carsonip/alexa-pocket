@@ -4,15 +4,6 @@
       "intent": "Retrieve"
     },
     {
-      "intent": "RetrieveWithTag",
-      "slots": [
-        {
-          "name": "Tag",
-          "type": "AMAZON.LITERAL"
-        }
-      ]
-    },
-    {
       "intent": "RetrieveNext"
     },
     {
