@@ -12,19 +12,49 @@ const states = {
     FINISH_READING: '_FINISH_READING',
 }
 
+const languageStrings = {
+    'en': {
+        'translation': {
+            "LINK_ACCOUNT": "to start using this skill, please use the companion app to authenticate on Amazon",
+            "NO_ACTIVE_ARTICLE": "There is no reading article",
+            "ARCHIVED": "Item archived",
+            
+            "ARTICLE_FINISH": "That's all for this article. Would you like to archive it?",
+            "ARTICLE_FINISH_REPROMPT": "Say Yes to archive, or say No to do nothing. Would you like to archive the article?",
+            "ARTICLE_NEXT": "Would you like to continue?",
+            "ARTICLE_NEXT_REPROMPT": "Say Yes to continue, or say No to stop. Would you like to continue?",
+
+            "LIST_EMPTY": "Your Pocket is empty. Try saving some articles to Pocket.",
+            "LIST_END": "There are no more articles in list.",
+            "LIST_TAG_EMPTY": "There are no articles with tag %s.",
+            "LIST_START": "Here are %s of your saved articles in Pocket:",
+            "LIST_TAG_START": "Here are %s of your saved articles in Pocket with tag %s:",
+            "LIST_NEXT": "Here are the next %s: ",
+            "LIST_PROMPT": "Which one would you like to read? Say the number, or say, next, to read the next in list.",
+
+            "HELP": "When you say, Alexa, ask My Pocket what articles do I have, it will read you the 5 latest articles you saved. Then you may say a number, and it will read the corresponding article to you. After finish reading the article, you may archive the article. If you want to link or re-link to your account, say, Alexa, ask My Pocket to link account. Now, you can say, Start, to begin, or you can say, Stop.",
+            "HELP_REPROMPT": "Say, Start, to begin, or you can say, Stop.",
+            "GOODBYE": "Goodbye",
+
+            "POCKET_ERROR": "Error accessing Pocket",
+            "NO_LIST_ERROR": "No list",
+            "INVALID_NUMBER_ERROR": "Invalid number",
+            "INVALID_ITEM_ERROR": "Invalid item",
+
+        }
+    }
+}
+
 exports.handler = function (event, context, callback) {
     var alexa = Alexa.handler(event, context);
     alexa.APP_ID = APP_ID;
-    // TODO: i18n
-    // To enable string internationalization (i18n) features, set a resources object.
-    // alexa.resources = languageStrings;
+    alexa.resources = languageStrings;
     alexa.registerHandlers(handlers, readingHandlers, finishReadingHandlers);
     alexa.execute();
 };
 
 function linkAccount() {
-    this.emit(':tellWithLinkAccountCard',
-        'to start using this skill, please use the companion app to authenticate on Amazon');
+    this.emit(':tellWithLinkAccountCard', this.t('LINK_ACCOUNT'));
 }
 
 function archive() {
@@ -33,15 +63,15 @@ function archive() {
         return;
     }
     if (!this.attributes['currentArticle']) {
-        this.emit(':tell', 'There is no reading article');
+        this.emit(':tell', this.t('NO_ACTIVE_ARTICLE'));
         return;
     }
     pocket.archive(this.event.session.user.accessToken, this.attributes['currentArticle'].item_id)
         .then((response) => {
-            this.emit(':tell', 'Item archived');
+            this.emit(':tell', this.t('ARCHIVED'));
         })
         .catch((error) => {
-            this.emit(':tell', 'Error accessing Pocket');
+            this.emit(':tell', this.t('POCKET_ERROR'));
             console.log(error);
         });
 }
@@ -57,11 +87,11 @@ function readChunk(before) {
 
     if (this.attributes['chunkIndex'] == chunks.length) {
         this.handler.state = states.FINISH_READING;
-        speechOutput += '<break time="1s"/>That\'s all for this article. Would you like to archive it?';
-        reprompt = 'Say Yes to archive, or say No to do nothing. Would you like to archive the article?';
+        speechOutput += `<break time="1s"/>${this.t('ARTICLE_FINISH')}`;
+        reprompt = this.t('ARTICLE_FINISH_REPROMPT');
     } else {
-        speechOutput += '<break time="1s"/>Would you like to continue?';
-        reprompt = 'Say Yes to continue, or say No to stop. Would you like to continue?';
+        speechOutput += `<break time="1s"/>${this.t('ARTICLE_NEXT')}`;
+        reprompt = this.t('ARTICLE_NEXT_REPROMPT');
     }
 
     this.emit(':ask', speechOutput, reprompt);
@@ -83,30 +113,30 @@ function readList(count, offset, tag) {
 
             if (list.length === 0) {
                 if (next) {
-                    this.emit(':tell', `There are no more articles in list.`);
+                    this.emit(':tell', this.t('LIST_END'));
                 } else {
-                    if (tag) this.emit(':tell', `There are no articles with tag ${tag}.`);
-                    else this.emit(':tell', 'Your Pocket is empty. Try saving some articles to Pocket.');
+                    if (tag) this.emit(':tell', this.t('LIST_TAG_EMPTY', tag));
+                    else this.emit(':tell', this.t('LIST_EMPTY'));
                 }
                 return;
             }
 
             let titles = list.map((item) => item.resolved_title).map(utils.ssmlEscape);
 
-            let opening = !next ? `Here are ${list.length} of your saved articles in Pocket${tag ? ' with tag ' + tag : ''}:` : `Here are the next ${list.length}:`;
+            let opening = !next ? (tag ? this.t('LIST_START', list.length) : this.t('LIST_TAG_START', list.length, tag)) : this.t('LIST_NEXT', list.length);
 
             let titlesJoined = titles.reduce((prev, item, i) =>
                 prev + '<break time="1s"/>' + (i + 1) + ": " + item, opening
             );
 
             let speechOutput = '';
-            speechOutput += titlesJoined + '<break time="1s"/> Which one would you like to read? Say the number, or say, next, to read the next in list.';
+            speechOutput += titlesJoined + `<break time="1s"/>${this.t('LIST_PROMPT')}`;
 
-            let reprompt = 'Which one would you like to read? Say the number, or say, next, to read the next in list.';
+            let reprompt = this.t('LIST_PROMPT');
             this.emit(':ask', speechOutput, reprompt);
         })
         .catch((error) => {
-            this.emit(':tell', 'Error accessing Pocket');
+            this.emit(':tell', this.t('POCKET_ERROR'));
             console.log(error);
         })
 }
@@ -121,7 +151,7 @@ function readRandomArticle() {
             this.attributes['list'] = list;
 
             if (list.length === 0) {
-                this.emit(':tell', 'Your Pocket is empty. Try saving some articles to Pocket.');
+                this.emit(':tell', this.t('LIST_EMPTY'));
                 return;
             }
 
@@ -129,7 +159,7 @@ function readRandomArticle() {
             readArticleFromIndex.call(this, randomIndex);
         })
         .catch((error) => {
-            this.emit(':tell', 'Error accessing Pocket');
+            this.emit(':tell', this.t('POCKET_ERROR'));
             console.log(error);
         })
 }
@@ -143,21 +173,21 @@ function readArticleFromIndex(index) {
     let list = this.attributes['list'];
     this.attributes['list'] = null;
     if (!list) {
-        this.emit(':tell', 'No List');
+        this.emit(':tell', this.t('NO_LIST_ERROR'));
         return;
     }
 
     if (list.length === 0) {
-        this.emit(':tell', 'Your Pocket is empty. Try saving some articles to Pocket.');
+        this.emit(':tell', this.t('LIST_EMPTY'));
         return;
     }
 
     if (index < 0 || index >= list.length) {
-        this.emit(':tell', 'Wrong number');
+        this.emit(':tell', this.t('INVALID_NUMBER_ERROR'));
         return;
     }
     if (!list[index]) {
-        this.emit(':tell', 'Invalid item');
+        this.emit(':tell', this.t('INVALID_ITEM_ERROR'));
         return;
     }
 
@@ -173,7 +203,7 @@ function readArticleFromIndex(index) {
             readChunk.call(this, data.info);
         })
         .catch((error) => {
-            this.emit(':tell', 'Error accessing Pocket');
+            this.emit(':tell', this.t('POCKET_ERROR'));
             console.log(error);
         });
 }
@@ -204,15 +234,15 @@ var handlers = {
         archive.call(this);
     },
     'AMAZON.HelpIntent': function () {
-        var speechOutput = 'When you say, Alexa, ask My Pocket what articles do I have, it will read you the 5 latest articles you saved. Then you may say a number, and it will read the corresponding article to you. After finish reading the article, you may archive the article. If you want to link or re-link to your account, say, Alexa, ask My Pocket to link account. Now, you can say, Start, to begin, or you can say, Stop.';
-        var reprompt = 'Say, Start, to begin, or you can say, Stop.';
+        var speechOutput = this.t('HELP');
+        var reprompt = this.t('HELP_REPROMPT');
         this.emit(':ask', speechOutput, reprompt);
     },
     'AMAZON.CancelIntent': function () {
-        this.emit(':tell', 'Goodbye');
+        this.emit(':tell', this.t('GOODBYE'));
     },
     'AMAZON.StopIntent': function () {
-        this.emit(':tell', 'Goodbye');
+        this.emit(':tell', this.t('GOODBYE'));
     }
 };
 
@@ -221,7 +251,7 @@ var readingHandlers = Alexa.CreateStateHandler(states.READING, Object.assign({
         readChunk.call(this);
     },
     'AMAZON.NoIntent': function () {
-        this.emit(':tell', 'Goodbye');
+        this.emit(':tell', this.t('GOODBYE'));
     },
 }, handlers));
 
@@ -230,6 +260,6 @@ var finishReadingHandlers = Alexa.CreateStateHandler(states.FINISH_READING, Obje
         this.emit('Archive');
     },
     'AMAZON.NoIntent': function () {
-        this.emit(':tell', 'Goodbye');
+        this.emit(':tell', this.t('GOODBYE'));
     },
 }, handlers));
