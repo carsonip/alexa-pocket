@@ -40,7 +40,35 @@ const languageStrings = {
             "NO_LIST_ERROR": "No list",
             "INVALID_NUMBER_ERROR": "Invalid number",
             "INVALID_ITEM_ERROR": "Invalid item",
+        }
+    },
+    'de': {
+        'translation': {
+            "LINK_ACCOUNT": "Um diesen Skill verwenden zu können, starte bitte die Alexa App und verknüpfe deinen Pocket Account",
+            "NO_ACTIVE_ARTICLE": "Es gibt leider keinen Artikel",
+            "ARCHIVED": "Artikel archiviert",
+            
+            "ARTICLE_FINISH": "Das ist alles zu diesem Artikel. Möchtest du ihn archivieren?",
+            "ARTICLE_FINISH_REPROMPT": "Sage ja zum Archivieren, oder sage nein um abzubrechen. Möchtest du den Artikel archivieren?",
+            "ARTICLE_NEXT": "Möchtest du fortfahren?",
+            "ARTICLE_NEXT_REPROMPT": "Sage ja um fortzufahren, oder sage nein um zu stoppen. Möchtest du fortfahren?",
 
+            "LIST_EMPTY": "Deine Pocket Liste ist leer. Versuche einige Artikel in Pocket zu speichern.",
+            "LIST_END": "Es gibt keine weiteren Artikel in der Liste.",
+            "LIST_TAG_EMPTY": "Es gibt keine Artikel mit dem Tag %s.",
+            "LIST_START": "Hier sind %s deiner gespeicherten Artikel von Pocket:",
+            "LIST_TAG_START": "Hier sind %s deiner gespeicherten Artikel von Pocket mit dem Tag %s:",
+            "LIST_NEXT": "Hier sind die nächsten %s: ",
+            "LIST_PROMPT": "Welchen würdest du gerne hören? Sag die Nummer oder sage weiter um den nächsten in der Liste zu hören.",
+
+            "HELP": "Wenn du sagst, Alexa, frage My Pocket welche Artikel ich habe, werde ich dir die letzten 5 gespeicherten Artikel vorlesen. Dann kannst du eine Zahl sagen und ich werde dir den entsprechenden Artikel vorlesen. Nachdem ich den Artikel vorgelesen habe kannst du ihn archivieren. Wenn du deinen Account verknüpfen willst, sage Alexa, öffne My Pocket und verknüpfe meinen Account. Jetzt sage, Start, um zu beginnen, oder sage Stop.",
+            "HELP_REPROMPT": "Sage Start, um zu beginnen, oder sage Stop.",
+            "GOODBYE": "Auf Wiedersehen",
+
+            "POCKET_ERROR": "Fehler beim Zugriff auf Pocket",
+            "NO_LIST_ERROR": "Keine Liste",
+            "INVALID_NUMBER_ERROR": "Ungültige Nummer",
+            "INVALID_ITEM_ERROR": "Ungültiger Artikel",
         }
     }
 }
