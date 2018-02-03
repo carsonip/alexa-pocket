@@ -1,0 +1,28 @@
+Retrieve abrufen
+Retrieve gib mir meine gespeicherten Artikel
+Retrieve sag mir meine gespeicherten Artikel
+Retrieve meine gespeicherten Artikel abrufen
+Retrieve gib mir eine Liste meiner gespeicherten Artikel
+Retrieve rufe meine gespeicherten Artikel ab
+Retrieve meine gespeicherten Artikel
+Retrieve meine Liste gespeicherter Artikel
+Retrieve meine Artikel
+Retrieve meine Artikel abrufen
+Retrieve welche Artikel habe ich
+Retrieve welche Artikel gibt es
+RetrieveNext weiter
+RetrieveNext nächster
+ReadArticleFromIndex {Number}
+ReadArticleFromIndex nummer {Number}
+ReadRandomArticle lies einen Artikel
+ReadRandomArticle lies einen zufälligen Artikel
+ReadRandomArticle ein Artikel
+ReadRandomArticle einen Artikel
+ReadRandomArticle nach einem Artikel
+LinkAccount verknüpfe meinen Pocket Account
+LinkAccount verknüpfe meinen Account
+LinkAccount verknüpfe mit meinem Account
+LinkAccount verknüpfe mit My Pocket Account
+LinkAccount verknüpfe mit My Pocket
+LinkAccount verknüpfe mit Pocket
+LinkAccount verknüpfe Account
