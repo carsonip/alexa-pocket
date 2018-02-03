@@ -151,7 +151,7 @@ function readList(count, offset, tag) {
 
             let titles = list.map((item) => item.resolved_title).map(utils.ssmlEscape);
 
-            let opening = !next ? (tag ? this.t('LIST_START', list.length) : this.t('LIST_TAG_START', list.length, tag)) : this.t('LIST_NEXT', list.length);
+            let opening = !next ? (!tag ? this.t('LIST_START', list.length) : this.t('LIST_TAG_START', list.length, tag)) : this.t('LIST_NEXT', list.length);
 
             let titlesJoined = titles.reduce((prev, item, i) =>
                 prev + '<break time="1s"/>' + (i + 1) + ": " + item, opening
