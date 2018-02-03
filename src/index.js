@@ -42,7 +42,7 @@ const languageStrings = {
             "INVALID_ITEM_ERROR": "Invalid item",
         }
     },
-    'de': {
+    'de-DE': {
         'translation': {
             "LINK_ACCOUNT": "Um diesen Skill verwenden zu können, starte bitte die Alexa App und verknüpfe deinen Pocket Account",
             "NO_ACTIVE_ARTICLE": "Es gibt leider keinen Artikel",
