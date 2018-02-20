@@ -1,4 +1,5 @@
 const cheerio = require('cheerio');
+const zlib = require('zlib');
 const MAX_PARAGRAPH_LEN = 3500; // characters
 
 function ssmlEscape(speech) {
@@ -62,8 +63,18 @@ function divideContent(paragraphs) {
     return chunks;
 }
 
+function compress(obj) {
+    return zlib.deflateSync(JSON.stringify(obj)).toString('base64');
+}
+
+function decompress(compressed) {
+    return JSON.parse(zlib.inflateSync(new Buffer(compressed, 'base64')).toString());
+}
+
 exports.ssmlEscape = ssmlEscape;
 exports.objToArr = objToArr;
 exports.getParagraphs = getParagraphs;
 exports.divideContent = divideContent;
 exports.getArticleInfo = getArticleInfo;
+exports.compress = compress;
+exports.decompress = decompress;

@@ -94,7 +94,9 @@ function archive() {
         this.emit(':tell', this.t('NO_ACTIVE_ARTICLE'));
         return;
     }
-    pocket.archive(this.event.session.user.accessToken, this.attributes['currentArticle'].item_id)
+
+    let currentArticle = utils.decompress(this.attributes['currentArticle']);
+    pocket.archive(this.event.session.user.accessToken, currentArticle.item_id)
         .then((response) => {
             this.emit(':tell', this.t('ARCHIVED'));
         })
@@ -107,7 +109,7 @@ function archive() {
 function readChunk(before) {
     before = before || '';
 
-    let chunks = this.attributes['chunks'];
+    let chunks = utils.decompress(this.attributes['chunks']);
     let speechOutput = before + chunks[this.attributes['chunkIndex']];
     this.attributes['chunkIndex']++;
 
@@ -136,7 +138,7 @@ function readList(count, offset, tag) {
     pocket.getList(this.event.session.user.accessToken, count, offset, tag)
         .then((list) => {
             this.attributes['retrieveOffset'] = offset + list.length
-            this.attributes['list'] = list;
+            this.attributes['list'] = utils.compress(list);
             this.attributes['tag'] = tag;
 
             if (list.length === 0) {
@@ -176,7 +178,7 @@ function readRandomArticle() {
     }
     pocket.getList(this.event.session.user.accessToken, 10)
         .then((list) => {
-            this.attributes['list'] = list;
+            this.attributes['list'] = utils.compress(list);
 
             if (list.length === 0) {
                 this.emit(':tell', this.t('LIST_EMPTY'));
@@ -198,7 +200,7 @@ function readArticleFromIndex(index) {
         return;
     }
 
-    let list = this.attributes['list'];
+    let list = utils.decompress(this.attributes['list']);
     this.attributes['list'] = null;
     if (!list) {
         this.emit(':tell', this.t('NO_LIST_ERROR'));
@@ -219,12 +221,12 @@ function readArticleFromIndex(index) {
         return;
     }
 
-    this.attributes['currentArticle'] = list[index];
+    this.attributes['currentArticle'] = utils.compress(list[index]);
 
     let url = list[index].resolved_url || list[index].given_url;
     pocket.getArticleView(url)
         .then((data) => {
-            this.attributes['chunks'] = data.chunks;
+            this.attributes['chunks'] = utils.compress(data.chunks);
             this.attributes['chunkIndex'] = 0;
 
             this.handler.state = states.READING;
