@@ -106,25 +106,77 @@ function archive() {
         });
 }
 
+function prepareChunk() {
+    let p = new Promise((resolve, reject) => {
+        let chunkIndex = this.attributes['chunkIndex'];
+        let chunks = this.attributes['chunks'];
+        if (chunks && chunkIndex < chunks.length) { // The chunk is stored
+            resolve('');
+            return;
+        }
+        let currentArticle = utils.decompress(this.attributes['currentArticle']);
+        let url = currentArticle.resolved_url || currentArticle.given_url;
+        pocket.getArticleView(url)
+            .then((data) => {
+                // Make sure we don't exceed response size limits.
+                let chunksLength = data.chunks.length;
+                let cumulativeLength = [0]; // 1-based
+                for (let i = 0; i < chunksLength; i++) {
+                    cumulativeLength.push(data.chunks[i].length + cumulativeLength[i]);
+                }
+
+                // Let's say we store 16K characters
+                const MAX_CHUNKS_CONTENT_LENGTH = 16 * 1024;
+                let storeChunks = [];
+                for (let i = 0; i < chunksLength; i++) {
+                    if (i < chunkIndex) {
+                        storeChunks.push('');
+                    } else {
+                        if (cumulativeLength[i + 1] - cumulativeLength[chunkIndex] < MAX_CHUNKS_CONTENT_LENGTH) {
+                            storeChunks.push(data.chunks[i]);
+                        } else {
+                            break;
+                        }
+                    }
+                }
+                this.attributes['chunks'] = storeChunks;
+                this.attributes['chunksLength'] = chunksLength;
+
+                this.handler.state = states.READING;
+                resolve(data.info);
+            })
+            .catch((error) => {
+                this.emit(':tell', this.t('POCKET_ERROR'));
+                console.log(error);
+            });
+        });
+    return p;
+}
+
 function readChunk(before) {
     before = before || '';
 
-    let chunks = utils.decompress(this.attributes['chunks']);
-    let speechOutput = before + chunks[this.attributes['chunkIndex']];
-    this.attributes['chunkIndex']++;
-
-    let reprompt;
-
-    if (this.attributes['chunkIndex'] == chunks.length) {
-        this.handler.state = states.FINISH_READING;
-        speechOutput += `<break time="1s"/>${this.t('ARTICLE_FINISH')}`;
-        reprompt = this.t('ARTICLE_FINISH_REPROMPT');
-    } else {
-        speechOutput += `<break time="1s"/>${this.t('ARTICLE_NEXT')}`;
-        reprompt = this.t('ARTICLE_NEXT_REPROMPT');
-    }
-
-    this.emit(':ask', speechOutput, reprompt);
+    prepareChunk.call(this).then((info) => {
+        if (this.attributes['chunkIndex'] == 0) {
+            before += info || '';
+        }
+        let chunks = this.attributes['chunks'];
+        let speechOutput = before + chunks[this.attributes['chunkIndex']];
+        this.attributes['chunkIndex']++;
+    
+        let reprompt;
+    
+        if (this.attributes['chunkIndex'] == this.attributes['chunksLength']) {
+            this.handler.state = states.FINISH_READING;
+            speechOutput += `<break time="1s"/>${this.t('ARTICLE_FINISH')}`;
+            reprompt = this.t('ARTICLE_FINISH_REPROMPT');
+        } else {
+            speechOutput += `<break time="1s"/>${this.t('ARTICLE_NEXT')}`;
+            reprompt = this.t('ARTICLE_NEXT_REPROMPT');
+        }
+    
+        this.emit(':ask', speechOutput, reprompt);
+    })
 }
 
 function readList(count, offset, tag) {
@@ -223,19 +275,10 @@ function readArticleFromIndex(index) {
 
     this.attributes['currentArticle'] = utils.compress(list[index]);
 
-    let url = list[index].resolved_url || list[index].given_url;
-    pocket.getArticleView(url)
-        .then((data) => {
-            this.attributes['chunks'] = utils.compress(data.chunks);
-            this.attributes['chunkIndex'] = 0;
-
-            this.handler.state = states.READING;
-            readChunk.call(this, data.info);
-        })
-        .catch((error) => {
-            this.emit(':tell', this.t('POCKET_ERROR'));
-            console.log(error);
-        });
+    this.attributes['chunks'] = null;
+    this.attributes['chunkIndex'] = 0;
+    this.attributes['chunksLength'] = 0;
+    readChunk.call(this);
 }
 
 var handlers = {
