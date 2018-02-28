@@ -64,10 +64,12 @@ function divideContent(paragraphs) {
 }
 
 function compress(obj) {
+    if (!obj) return;
     return zlib.deflateSync(JSON.stringify(obj)).toString('base64');
 }
 
 function decompress(compressed) {
+    if (!compressed) return;
     return JSON.parse(zlib.inflateSync(new Buffer(compressed, 'base64')).toString());
 }
 
