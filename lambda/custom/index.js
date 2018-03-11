@@ -5,9 +5,9 @@ const utils = require('./utils.js');
 const pocket = require('./pocket.js').create();
 
 const RETURN_COUNT = 5;
-// Total number of characters to store in this batch of chunks
+// Total number of bytes to store in this batch of chunks
 // This is to workaround the 24KB response size limit
-const MAX_CHUNKS_CONTENT_LENGTH = 16 * 1024; 
+const MAX_CHUNKS_CONTENT_SIZE = 16 * 1024; 
 
 const states = {
     START: '_START',
@@ -50,7 +50,7 @@ function archive() {
 function prepareChunk() {
     let p = new Promise((resolve, reject) => {
         let chunkIndex = this.attributes['chunkIndex'];
-        let chunks = this.attributes['chunks'];
+        let chunks = utils.decompress(this.attributes['chunks']);
         if (chunks && chunkIndex < chunks.length) { // The chunk is stored
             resolve('');
             return;
@@ -62,9 +62,9 @@ function prepareChunk() {
             .then((data) => {
                 // Make sure we don't exceed response size limits.
                 let chunksLength = data.chunks.length;
-                let cumulativeLength = [0]; // 1-based
+                let cumulativeSize = [0]; // 1-based
                 for (let i = 0; i < chunksLength; i++) {
-                    cumulativeLength.push(data.chunks[i].length + cumulativeLength[i]);
+                    cumulativeSize.push(utils.getByteLen(data.chunks[i]) + cumulativeSize[i]);
                 }
 
                 let storeChunks = [];
@@ -72,14 +72,14 @@ function prepareChunk() {
                     if (i < chunkIndex) {
                         storeChunks.push('');
                     } else {
-                        if (cumulativeLength[i + 1] - cumulativeLength[chunkIndex] < MAX_CHUNKS_CONTENT_LENGTH) {
+                        if (cumulativeSize[i + 1] - cumulativeSize[chunkIndex] < MAX_CHUNKS_CONTENT_SIZE) {
                             storeChunks.push(data.chunks[i]);
                         } else {
                             break;
                         }
                     }
                 }
-                this.attributes['chunks'] = storeChunks;
+                this.attributes['chunks'] = utils.compress(storeChunks);
                 this.attributes['chunksLength'] = chunksLength;
 
                 this.handler.state = states.READING;
@@ -100,7 +100,7 @@ function readChunk(before) {
         if (this.attributes['chunkIndex'] == 0) {
             before += info || '';
         }
-        let chunks = this.attributes['chunks'];
+        let chunks = utils.decompress(this.attributes['chunks']);
         let speechOutput = before + chunks[this.attributes['chunkIndex']];
         this.attributes['chunkIndex']++;
     
