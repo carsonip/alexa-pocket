@@ -63,6 +63,17 @@ function divideContent(paragraphs) {
     return chunks;
 }
 
+function filterMetadata(item) {
+    const ALLOWED = ['item_id', 'given_url', 'resolved_url'];
+    const newItem = Object.keys(item)
+        .filter(key => ALLOWED.includes(key))
+        .reduce((obj, key) => {
+            obj[key] = item[key];
+            return obj;
+        }, {});
+    return newItem;
+}
+
 function compress(obj) {
     if (!obj) return;
     return zlib.deflateSync(JSON.stringify(obj)).toString('base64');
@@ -78,5 +89,6 @@ exports.objToArr = objToArr;
 exports.getParagraphs = getParagraphs;
 exports.divideContent = divideContent;
 exports.getArticleInfo = getArticleInfo;
+exports.filterMetadata = filterMetadata;
 exports.compress = compress;
 exports.decompress = decompress;

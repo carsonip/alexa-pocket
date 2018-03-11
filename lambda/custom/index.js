@@ -19,8 +19,8 @@ const languageStrings = {
             "NO_ACTIVE_ARTICLE": "There is no reading article",
             "ARCHIVED": "Item archived",
             
-            "ARTICLE_FINISH": "That's all for this article. Would you like to archive it?",
-            "ARTICLE_FINISH_REPROMPT": "Say Yes to archive, or say No to do nothing. Would you like to archive the article?",
+            "ARTICLE_FINISH": "That's all for this article. Say, Archive, or, Next. ",
+            "ARTICLE_FINISH_REPROMPT": "Say, Archive, or, Next. ",
             "ARTICLE_NEXT": "Would you like to continue?",
             "ARTICLE_NEXT_REPROMPT": "Say Yes to continue, or say No to stop. Would you like to continue?",
 
@@ -90,12 +90,9 @@ function archive() {
         linkAccount.call(this);
         return;
     }
-    if (!this.attributes['currentArticle']) {
-        this.emit(':tell', this.t('NO_ACTIVE_ARTICLE'));
-        return;
-    }
+    let list = utils.decompress(this.attributes['list']);
+    let currentArticle = list[this.attributes['currentIndex']];
 
-    let currentArticle = utils.decompress(this.attributes['currentArticle']);
     pocket.archive(this.event.session.user.accessToken, currentArticle.item_id)
         .then((response) => {
             this.emit(':tell', this.t('ARCHIVED'));
@@ -114,7 +111,8 @@ function prepareChunk() {
             resolve('');
             return;
         }
-        let currentArticle = utils.decompress(this.attributes['currentArticle']);
+        let list = utils.decompress(this.attributes['list']);
+        let currentArticle = list[this.attributes['currentIndex']];
         let url = currentArticle.resolved_url || currentArticle.given_url;
         pocket.getArticleView(url)
             .then((data) => {
@@ -190,7 +188,7 @@ function readList(count, offset, tag) {
     pocket.getList(this.event.session.user.accessToken, count, offset, tag)
         .then((list) => {
             this.attributes['retrieveOffset'] = offset + list.length
-            this.attributes['list'] = utils.compress(list);
+            this.attributes['list'] = utils.compress(list.map(utils.filterMetadata));
             this.attributes['tag'] = tag;
 
             if (list.length === 0) {
@@ -230,12 +228,7 @@ function readRandomArticle() {
     }
     pocket.getList(this.event.session.user.accessToken, 10)
         .then((list) => {
-            this.attributes['list'] = utils.compress(list);
-
-            if (list.length === 0) {
-                this.emit(':tell', this.t('LIST_EMPTY'));
-                return;
-            }
+            this.attributes['list'] = utils.compress(list.map(utils.filterMetadata));
 
             let randomIndex = Math.floor(Math.random() * list.length);
             readArticleFromIndex.call(this, randomIndex);
@@ -253,7 +246,7 @@ function readArticleFromIndex(index) {
     }
 
     let list = utils.decompress(this.attributes['list']);
-    this.attributes['list'] = null;
+    
     if (!list) {
         this.emit(':tell', this.t('NO_LIST_ERROR'));
         return;
@@ -273,12 +266,48 @@ function readArticleFromIndex(index) {
         return;
     }
 
-    this.attributes['currentArticle'] = utils.compress(list[index]);
+    // index of article in list
+    this.attributes['currentIndex'] = index;
 
     this.attributes['chunks'] = null;
     this.attributes['chunkIndex'] = 0;
     this.attributes['chunksLength'] = 0;
     readChunk.call(this);
+}
+
+function readNextArticle() {
+    if (this.event.session.user.accessToken == undefined) {
+        linkAccount.call(this);
+        return;
+    }
+    let list = utils.decompress(this.attributes['list']);
+    
+    if (!list) {
+        this.emit(':tell', this.t('NO_LIST_ERROR'));
+        return;
+    }
+
+    if (list.length === 0) {
+        this.emit(':tell', this.t('LIST_EMPTY'));
+        return;
+    }
+
+    let nextIndex = this.attributes['currentIndex'] + 1 || 0;
+    if (nextIndex >= list.length) {
+        pocket.getList(this.event.session.user.accessToken, RETURN_COUNT, this.attributes['retrieveOffset'], this.attributes['tag'])
+        .then((list) => {
+            this.attributes['retrieveOffset'] += list.length
+            this.attributes['list'] = utils.compress(list.map(utils.filterMetadata));
+            readArticleFromIndex.call(this, 0);
+        })
+        .catch((error) => {
+            this.emit(':tell', this.t('POCKET_ERROR'));
+            console.log(error);
+        })
+    } else {
+        readArticleFromIndex.call(this, nextIndex);
+    }
+
 }
 
 var handlers = {
@@ -294,7 +323,7 @@ var handlers = {
     'RetrieveWithTag': function () {
         readList.call(this, RETURN_COUNT, 0, this.event.request.intent.slots.Tag.value);
     },
-    'RetrieveNext': function () {
+    'Next': function () {
         readList.call(this, RETURN_COUNT, this.attributes['retrieveOffset'], this.attributes['tag']);
     },
     'ReadArticleFromIndex': function () {
@@ -319,20 +348,23 @@ var handlers = {
     }
 };
 
-var readingHandlers = Alexa.CreateStateHandler(states.READING, Object.assign({
+var readingHandlers = Alexa.CreateStateHandler(states.READING, Object.assign({}, handlers, {
     'AMAZON.YesIntent': function () {
         readChunk.call(this);
     },
     'AMAZON.NoIntent': function () {
         this.emit(':tell', this.t('GOODBYE'));
     },
-}, handlers));
+    'Next': function () {
+        readChunk.call(this);
+    },
+}));
 
-var finishReadingHandlers = Alexa.CreateStateHandler(states.FINISH_READING, Object.assign({
-    'AMAZON.YesIntent': function () {
+var finishReadingHandlers = Alexa.CreateStateHandler(states.FINISH_READING, Object.assign({}, handlers, {
+    'Next': function () {
+        readNextArticle.call(this);
+    },
+    'Archive': function () {
         this.emit('Archive');
     },
-    'AMAZON.NoIntent': function () {
-        this.emit(':tell', this.t('GOODBYE'));
-    },
-}, handlers));
+}));

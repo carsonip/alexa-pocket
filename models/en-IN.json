@@ -20,9 +20,15 @@
           ]
         },
         {
-          "name": "RetrieveNext",
+          "name": "Next",
           "samples": [
             "next"
+          ]
+        },
+        {
+          "name": "Archive",
+          "samples": [
+            "archive"
           ]
         },
         {

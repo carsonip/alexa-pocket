@@ -21,10 +21,16 @@
           ]
         },
         {
-          "name": "RetrieveNext",
+          "name": "Next",
           "samples": [
             "weiter",
             "nächster"
+          ]
+        },
+        {
+          "name": "Archive",
+          "samples": [
+            "archivieren"
           ]
         },
         {
