@@ -1,0 +1,168 @@
+{
+  "manifest": {
+    "publishingInformation": {
+      "locales": {
+        "de-DE": {
+          "summary": "Inoffizieller Skill für Pocket, der deine gespeicherten Artikel vorliest.",
+          "examplePhrases": [
+            "Alexa, frage My Pocket welche Artikel habe ich",
+            "Alexa, frage My Pocket nach einem Artikel",
+            "Alexa, sage My Pocket verknüpfe meinen Account"
+          ],
+          "keywords": [
+            "pocket",
+            "lesen",
+            "artikel",
+            "client",
+            "später",
+            "getpocket"
+          ],
+          "name": "My Pocket: Inoffizieller Pocket Skill",
+          "smallIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/cbb0/f469792129d84685b85796cc6575bbfb/APP_ICON?versionId=mBMu.XLOnNH5CvT3C5B_0DAw.mTpTWfZ&AWSAccessKeyId=AKIAI3X6PUXD7CU5F5BQ&Expires=1520847511&Signature=6V8BtL6ND8yqu2Je37f%2Ft1DefbI%3D",
+          "description": "My Pocket ist ein inoffizieller Alexa Skill für Pocket. Dieser Skill benötigt eine Verknüpfung mit deinem Pocket Account in deiner Alexa App/Webseite.\n\nWenn du sagst \"Alexa, frage My Pocket welche Artikel habe ich?\", werden dir die Titel der 5 aktuellsten Artikel vorgelesen. Dann kannst du eine Zahl nenne, zum Beispiel \"Drei\", und Alexa wird den entsprechenden Artikel für dich vorlesen. Wenn der Artikel fertig vorgelesen wurde, kannst du ihn archivieren.\n\nAlternativ kannst du sagen \"Alexa, frage My Pocket nach einem Artikel\" für einen zufälligen Artikel aus deinem Pocket Account.\n\nWenn du deinen Pocket Account verknüpfen willst, sage \"Alexa, sage My Pocket verknüpfe meinen Account\".\n\nFalls du Vorschläge oder Probleme hast, kannst du diese gerne hier berichten: https://github.com/carsonip/alexa-pocket/issues\n\nMy Pocket ist ein Open Source Skill auf GitHub: https://github.com/carsonip/alexa-pocket\n\nDieser Skill steht in keiner Verbindung mit Pocket (Read It Later, Inc).",
+          "largeIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/3a50/e2cf0c8577414223913ee8db99186642/APP_ICON_LARGE?versionId=4NkfYLAwTYfsK5qIjje5JwRfKb2Gc4LN&AWSAccessKeyId=AKIAI3X6PUXD7CU5F5BQ&Expires=1520847511&Signature=WMsS6RoQiRk%2B63FNvave3rrxqG8%3D"
+        },
+        "en-US": {
+          "summary": "Unofficial skill for Pocket that reads your saved articles.",
+          "examplePhrases": [
+            "Alexa, ask My Pocket what articles do I have",
+            "Alexa, ask My Pocket to read me an article",
+            "Alexa, ask My Pocket to link account"
+          ],
+          "keywords": [
+            "pocket",
+            "read",
+            "article",
+            "client",
+            "later",
+            "getpocket"
+          ],
+          "name": "My Pocket: Unofficial Pocket Skill",
+          "smallIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/26e35b8d1d6b4ee68f066013adf098bc/APP_ICON?versionId=mWWWq8GlMw3oy97lHgXAH4yjFMBYg.7r&AWSAccessKeyId=AKIAI3X6PUXD7CU5F5BQ&Expires=1520847511&Signature=b%2FwnGkYCJ2l7N9oHEGshxgSHYkQ%3D",
+          "description": "This is an unofficial Alexa skill for Pocket. The skill requires to link to your Pocket account in the Alexa app / website.\n\nWhen you say \"Alexa, ask My Pocket what articles do I have\", it will read you the title of 5 latest articles you saved. Then you may say a number, for example \"Three\", and it will read the corresponding article to you. After finish reading the article, you may archive the article.\n\nAlternatively, you can say \"Alexa, ask My Pocket to read me an article\" for a randomly picked article in your Pocket.\n\nIf you would like to link / re-link your Pocket account, say \"Alexa, ask My Pocket to link account\".\n\nIf you have any suggestions / issues, please report them here: https://github.com/carsonip/alexa-pocket/issues\n\nThis is an open-source skill on GitHub: https://github.com/carsonip/alexa-pocket\n\nThis skill is in no way associated with Pocket (Read It Later, Inc).",
+          "largeIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/01ee95947c85483a92747804acd4d401/APP_ICON_LARGE?versionId=..w24nwi.vt7G_0h8NxvyzH1pT.nyFMg&AWSAccessKeyId=AKIAI3X6PUXD7CU5F5BQ&Expires=1520847511&Signature=5p6BQbqKecMaGqNL5KnrMZ9iEs4%3D"
+        },
+        "en-CA": {
+          "summary": "Unofficial skill for Pocket that reads your saved articles.",
+          "examplePhrases": [
+            "Alexa, ask My Pocket what articles do I have",
+            "Alexa, ask My Pocket to read me an article",
+            "Alexa, ask My Pocket to link account"
+          ],
+          "keywords": [
+            "pocket",
+            "read",
+            "article",
+            "client",
+            "later",
+            "getpocket"
+          ],
+          "name": "My Pocket: Unofficial Pocket Skill",
+          "smallIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/b778/9bf4546266f04cec986a8eccb5dbbec8/APP_ICON?versionId=af4ePFLd.Vr_OAoQwuOolHyIk5t8YdcE&AWSAccessKeyId=AKIAI3X6PUXD7CU5F5BQ&Expires=1520847511&Signature=fhnlPRG5qQxmjnsCLanYFqcfHNU%3D",
+          "description": "This is an unofficial Alexa skill for Pocket. The skill requires to link to your Pocket account in the Alexa app / website.\n\nWhen you say \"Alexa, ask My Pocket what articles do I have\", it will read you the title of 5 latest articles you saved. Then you may say a number, for example \"Three\", and it will read the corresponding article to you. After finish reading the article, you may archive the article.\n\nAlternatively, you can say \"Alexa, ask My Pocket to read me an article\" for a randomly picked article in your Pocket.\n\nIf you would like to link / re-link your Pocket account, say \"Alexa, ask My Pocket to link account\".\n\nIf you have any suggestions / issues, please report them here: https://github.com/carsonip/alexa-pocket/issues\n\nThis is an open-source skill on GitHub: https://github.com/carsonip/alexa-pocket\n\nThis skill is in no way associated with Pocket (Read It Later, Inc).",
+          "largeIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/c12d/0f0e3a41e95a41778da6ec9fb1d8d8df/APP_ICON_LARGE?versionId=ta6JgHGUqMWeIrClCdz4V3pYViXX96ps&AWSAccessKeyId=AKIAI3X6PUXD7CU5F5BQ&Expires=1520847511&Signature=w5ZwtImddTuBxvULbs%2BCK8dJWts%3D"
+        },
+        "en-IN": {
+          "summary": "Unofficial skill for Pocket that reads your saved articles.",
+          "examplePhrases": [
+            "Alexa, ask My Pocket what articles do I have",
+            "Alexa, ask My Pocket to read me an article",
+            "Alexa, ask My Pocket to link account"
+          ],
+          "keywords": [
+            "pocket",
+            "read",
+            "article",
+            "client",
+            "later",
+            "getpocket"
+          ],
+          "name": "My Pocket: Unofficial Pocket Skill",
+          "smallIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/c8dc/fd60c940cae949d784faa90e1f6bb2fe/APP_ICON?versionId=0K9DIkBOZA9X18KabSW9n2l60Q78jL8s&AWSAccessKeyId=AKIAI3X6PUXD7CU5F5BQ&Expires=1520847511&Signature=Pa73VRGnvxvlKm8J13iQQ8khusM%3D",
+          "description": "This is an unofficial Alexa skill for Pocket. The skill requires to link to your Pocket account in the Alexa app / website.\n\nWhen you say \"Alexa, ask My Pocket what articles do I have\", it will read you the title of 5 latest articles you saved. Then you may say a number, for example \"Three\", and it will read the corresponding article to you. After finish reading the article, you may archive the article.\n\nAlternatively, you can say \"Alexa, ask My Pocket to read me an article\" for a randomly picked article in your Pocket.\n\nIf you would like to link / re-link your Pocket account, say \"Alexa, ask My Pocket to link account\".\n\nIf you have any suggestions / issues, please report them here: https://github.com/carsonip/alexa-pocket/issues\n\nThis is an open-source skill on GitHub: https://github.com/carsonip/alexa-pocket\n\nThis skill is in no way associated with Pocket (Read It Later, Inc).",
+          "largeIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/5372/94cd8225c68840ee9a5ecd0130c3ee05/APP_ICON_LARGE?versionId=Yehi9SnUVUU3N70E6dQ1yn4Sty6wNFKc&AWSAccessKeyId=AKIAI3X6PUXD7CU5F5BQ&Expires=1520847511&Signature=P4UdrbJCkrIF4pIWCmeSYy7VsDg%3D"
+        },
+        "en-AU": {
+          "summary": "Unofficial skill for Pocket that reads your saved articles.",
+          "examplePhrases": [
+            "Alexa, ask My Pocket what articles do I have",
+            "Alexa, ask My Pocket to read me an article",
+            "Alexa, ask My Pocket to link account"
+          ],
+          "keywords": [
+            "pocket",
+            "read",
+            "article",
+            "client",
+            "later",
+            "getpocket"
+          ],
+          "name": "My Pocket: Unofficial Pocket Skill",
+          "smallIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/287c/4ea4f312855b45f9afe108e76a4eef87/APP_ICON?versionId=RvK1LwdTxgZmh7PPB04GGAiO9Xa3dkU5&AWSAccessKeyId=AKIAI3X6PUXD7CU5F5BQ&Expires=1520847511&Signature=Y4zNDrzt0ThsgDbc4BEEckAP7WI%3D",
+          "description": "This is an unofficial Alexa skill for Pocket. The skill requires to link to your Pocket account in the Alexa app / website.\n\nWhen you say \"Alexa, ask My Pocket what articles do I have\", it will read you the title of 5 latest articles you saved. Then you may say a number, for example \"Three\", and it will read the corresponding article to you. After finish reading the article, you may archive the article.\n\nAlternatively, you can say \"Alexa, ask My Pocket to read me an article\" for a randomly picked article in your Pocket.\n\nIf you would like to link / re-link your Pocket account, say \"Alexa, ask My Pocket to link account\".\n\nIf you have any suggestions / issues, please report them here: https://github.com/carsonip/alexa-pocket/issues\n\nThis is an open-source skill on GitHub: https://github.com/carsonip/alexa-pocket\n\nThis skill is in no way associated with Pocket (Read It Later, Inc).",
+          "largeIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/ad8f/8dc0100cbc134790bddb284d9fb67b14/APP_ICON_LARGE?versionId=AdZCzeyBo8TyTE5ZpKi4g3__VOyy8Hne&AWSAccessKeyId=AKIAI3X6PUXD7CU5F5BQ&Expires=1520847511&Signature=QYBDPwtpyCDvHDujHdGV9z3H6%2B4%3D"
+        },
+        "en-GB": {
+          "summary": "Unofficial skill for Pocket that reads your saved articles.",
+          "examplePhrases": [
+            "Alexa, ask My Pocket what articles do I have",
+            "Alexa, ask My Pocket to read me an article",
+            "Alexa, ask My Pocket to link account"
+          ],
+          "keywords": [
+            "pocket",
+            "read",
+            "article",
+            "client",
+            "later",
+            "getpocket"
+          ],
+          "name": "My Pocket: Unofficial Pocket Skill",
+          "smallIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/41be/b34be6fcf36c415783a71419dda298dd/APP_ICON?versionId=7uDtbuI5UNvTzuteKxrj3414b.PcIJ2j&AWSAccessKeyId=AKIAI3X6PUXD7CU5F5BQ&Expires=1520847511&Signature=HGfIoj7mDIHFSqDvMYz0TKBfV6Q%3D",
+          "description": "This is an unofficial Alexa skill for Pocket. The skill requires to link to your Pocket account in the Alexa app / website.\n\nWhen you say \"Alexa, ask My Pocket what articles do I have\", it will read you the title of 5 latest articles you saved. Then you may say a number, for example \"Three\", and it will read the corresponding article to you. After finish reading the article, you may archive the article.\n\nAlternatively, you can say \"Alexa, ask My Pocket to read me an article\" for a randomly picked article in your Pocket.\n\nIf you would like to link / re-link your Pocket account, say \"Alexa, ask My Pocket to link account\".\n\nIf you have any suggestions / issues, please report them here: https://github.com/carsonip/alexa-pocket/issues\n\nThis is an open-source skill on GitHub: https://github.com/carsonip/alexa-pocket\n\nThis skill is in no way associated with Pocket (Read It Later, Inc).",
+          "largeIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/a602/98b2af5a36264ceea08eb392cfa7be65/APP_ICON_LARGE?versionId=vqhrizXfR6PeMeaFutH9G2HQ6_zyVkwb&AWSAccessKeyId=AKIAI3X6PUXD7CU5F5BQ&Expires=1520847511&Signature=3X3YptsCOmxq2i8vMPRi5VNVgn4%3D"
+        }
+      },
+      "isAvailableWorldwide": true,
+      "testingInstructions": "Requires to link to Pocket account. Pocket Support Team says \"I think this name makes a lot more sense, and you're welcome to use \"My Pocket: Unofficial Pocket Skill\" as your skill name and \"My Pocket\" as your invocation name. I think that makes it super clear that this isn't an official product from Pocket, while also making it easy for users to remember and use.\" Therefore, there should not be any problems with the use of \"Pocket\" in skill name and invocation name.\n\nThe 'retrieve with tag' function is removed.\n\nFor English, use this test Pocket account:\nPocket email: testalexa-en@mail.com\npassword: Ij$K67p33g5eSVEF1Q\n\nFor German, use this test Pocket account (as it contains German articles):\nPocket email: testalexa@mail.com\npassword: qCT78*eCU$hF65ZRSo\nDear Sir/Madam, please be realistic here. I do not represent Pocket and in any way associated with the company. If they do not have a German account linking page, I can do nothing about it.",
+      "category": "EDUCATION_AND_REFERENCE",
+      "distributionCountries": []
+    },
+    "apis": {
+      "custom": {
+        "endpoint": {
+          "sourceDir": "lambda/custom"
+        }
+      }
+    },
+    "manifestVersion": "1.0",
+    "permissions": [],
+    "privacyAndCompliance": {
+      "allowsPurchases": false,
+      "locales": {
+        "de-DE": {
+          "privacyPolicyUrl": "https://getpocket.com/privacy"
+        },
+        "en-US": {
+          "privacyPolicyUrl": "https://getpocket.com/privacy"
+        },
+        "en-CA": {
+          "privacyPolicyUrl": "https://getpocket.com/privacy"
+        },
+        "en-IN": {
+          "privacyPolicyUrl": "https://getpocket.com/privacy"
+        },
+        "en-AU": {
+          "privacyPolicyUrl": "https://getpocket.com/privacy"
+        },
+        "en-GB": {
+          "privacyPolicyUrl": "https://getpocket.com/privacy"
+        }
+      },
+      "isExportCompliant": true,
+      "containsAds": false,
+      "isChildDirected": false,
+      "usesPersonalInfo": false
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "alexa-pocket",
+  "version": "1.0.0",
+  "description": "Alexa Skill for Pocket",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "alexa",
+    "skill",
+    "pocket"
+  ],
+  "author": "Carson Ip",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "alexa-sdk": "^1.0.25",
+    "axios": "^0.16.1",
+    "cheerio": "^0.22.0"
+  }
+}

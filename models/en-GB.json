@@ -1,0 +1,79 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "my pocket",
+      "intents": [
+        {
+          "name": "Retrieve",
+          "samples": [
+            "retrieve",
+            "get my list of saved articles",
+            "retrieve my list of saved articles",
+            "get my list of articles",
+            "retrieve my list of articles",
+            "my list of saved articles",
+            "my list of articles",
+            "my articles",
+            "retrieve my articles",
+            "what articles do i have",
+            "what articles i have"
+          ]
+        },
+        {
+          "name": "RetrieveNext",
+          "samples": [
+            "next"
+          ]
+        },
+        {
+          "name": "ReadArticleFromIndex",
+          "slots": [
+            {
+              "name": "Number",
+              "type": "AMAZON.NUMBER"
+            }
+          ],
+          "samples": [
+            "{Number}",
+            "number {Number}"
+          ]
+        },
+        {
+          "name": "ReadRandomArticle",
+          "samples": [
+            "read me an article",
+            "read me a random article",
+            "an article"
+          ]
+        },
+        {
+          "name": "LinkAccount",
+          "samples": [
+            "link my pocket account",
+            "link my account",
+            "link to my account",
+            "link to my pocket account",
+            "link to my pocket",
+            "link to pocket",
+            "link account"
+          ]
+        },
+        {
+          "name": "AMAZON.YesIntent"
+        },
+        {
+          "name": "AMAZON.NoIntent"
+        },
+        {
+          "name": "AMAZON.HelpIntent"
+        },
+        {
+          "name": "AMAZON.StopIntent"
+        },
+        {
+          "name": "AMAZON.CancelIntent"
+        }
+      ]
+    }
+  }
+}

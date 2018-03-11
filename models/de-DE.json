@@ -1,0 +1,83 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "my pocket",
+      "intents": [
+        {
+          "name": "Retrieve",
+          "samples": [
+            "abrufen",
+            "gib mir meine gespeicherten Artikel",
+            "sag mir meine gespeicherten Artikel",
+            "meine gespeicherten Artikel abrufen",
+            "gib mir eine Liste meiner gespeicherten Artikel",
+            "rufe meine gespeicherten Artikel ab",
+            "meine gespeicherten Artikel",
+            "meine Liste gespeicherter Artikel",
+            "meine Artikel",
+            "meine Artikel abrufen",
+            "welche Artikel habe ich",
+            "welche Artikel gibt es"
+          ]
+        },
+        {
+          "name": "RetrieveNext",
+          "samples": [
+            "weiter",
+            "nächster"
+          ]
+        },
+        {
+          "name": "ReadArticleFromIndex",
+          "slots": [
+            {
+              "name": "Number",
+              "type": "AMAZON.NUMBER"
+            }
+          ],
+          "samples": [
+            "{Number}",
+            "nummer {Number}"
+          ]
+        },
+        {
+          "name": "ReadRandomArticle",
+          "samples": [
+            "lies einen Artikel",
+            "lies einen zufälligen Artikel",
+            "ein Artikel",
+            "einen Artikel",
+            "nach einem Artikel"
+          ]
+        },
+        {
+          "name": "LinkAccount",
+          "samples": [
+            "verknüpfe meinen Pocket Account",
+            "verknüpfe meinen Account",
+            "verknüpfe mit meinem Account",
+            "verknüpfe mit My Pocket Account",
+            "verknüpfe mit My Pocket",
+            "verknüpfe mit Pocket",
+            "verknüpfe Account"
+          ]
+        },
+        {
+          "name": "AMAZON.YesIntent"
+        },
+        {
+          "name": "AMAZON.NoIntent"
+        },
+        {
+          "name": "AMAZON.HelpIntent"
+        },
+        {
+          "name": "AMAZON.StopIntent"
+        },
+        {
+          "name": "AMAZON.CancelIntent"
+        }
+      ]
+    }
+  }
+}
