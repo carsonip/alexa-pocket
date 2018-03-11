@@ -1,6 +1,6 @@
 'use strict';
-var Alexa = require('alexa-sdk');
-var APP_ID = 'amzn1.ask.skill.1065618f-b70b-4308-9029-593c1445e950';  // TODO replace with your app ID (OPTIONAL).
+const Alexa = require('alexa-sdk');
+const APP_ID = process.env.APP_ID;  // TODO replace with your app ID (OPTIONAL).
 const utils = require('./utils.js');
 const pocket = require('./pocket.js').create();
 
