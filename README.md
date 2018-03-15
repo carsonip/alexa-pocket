@@ -1,4 +1,6 @@
-# Alexa Skill for Pocket
+# My Pocket: Unofficial Pocket Alexa Skill
+
+### Alexa skill: [My Pocket: Unofficial Pocket Skill](https://www.amazon.com/My-Pocket-Unofficial-Skill/dp/B071KZFKLM)
 
 This skill is an unofficial Alexa skill for Pocket. It is capable of:
 * Retrieving the saved list of articles
