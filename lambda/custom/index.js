@@ -163,14 +163,15 @@ function readList(count, offset, tag) {
         })
 }
 
-function readRandomArticle() {
+function readRandomArticle(tag) {
     if (this.event.session.user.accessToken == undefined) {
         linkAccount.call(this);
         return;
     }
-    pocket.getList(this.event.session.user.accessToken, 10)
+    pocket.getList(this.event.session.user.accessToken, 10, 0, tag)
         .then((list) => {
             this.attributes['list'] = utils.compress(list.map(utils.filterMetadata));
+            this.attributes['tag'] = tag;
 
             let randomIndex = Math.floor(Math.random() * list.length);
             readArticleFromIndex.call(this, randomIndex);
@@ -263,7 +264,7 @@ var handlers = {
         readList.call(this, RETURN_COUNT, 0);
     },
     'RetrieveWithTag': function () {
-        readList.call(this, RETURN_COUNT, 0, this.event.request.intent.slots.Tag.value);
+        readList.call(this, RETURN_COUNT, 0, this.event.request.intent.slots.Tag.value.toLowerCase());
     },
     'Next': function () {
         readList.call(this, RETURN_COUNT, this.attributes['retrieveOffset'], this.attributes['tag']);
@@ -272,7 +273,11 @@ var handlers = {
         readArticleFromIndex.call(this, this.event.request.intent.slots.Number.value - 1);
     },
     'ReadRandomArticle': function () {
-        readRandomArticle.call(this)
+        let tag = this.event.request.intent.slots.Tag;
+        if (tag) {
+            tag = tag.value.toLowerCase();
+        }
+        readRandomArticle.call(this, tag)
     },
     'Archive': function () {
         archive.call(this);

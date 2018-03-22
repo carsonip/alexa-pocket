@@ -20,6 +20,38 @@
           ]
         },
         {
+          "name": "RetrieveWithTag",
+          "slots": [
+            {
+              "name": "Tag",
+              "type": "TagType"
+            }
+          ],
+          "samples": [
+            "retrieve with tag {Tag}",
+            "get my list of saved articles with tag {Tag}",
+            "get my list of saved articles tagged {Tag}",
+            "retrieve my list of saved articles with tag {Tag}",
+            "retrieve my list of saved articles tagged {Tag}",
+            "get my list of articles with tag {Tag}",
+            "get my list of articles tagged {Tag}",
+            "retrieve my list of articles with tag {Tag}",
+            "retrieve my list of articles tagged {Tag}",
+            "my list of saved articles with tag {Tag}",
+            "my list of saved articles tagged {Tag}",
+            "my list of articles with tag {Tag}",
+            "my list of articles tagged {Tag}",
+            "my articles with tag {Tag}",
+            "my articles tagged {Tag}",
+            "retrieve my articles with tag {Tag}",
+            "retrieve my articles tagged {Tag}",
+            "what articles with tag {Tag} do i have",
+            "what articles tagged {Tag} do i have",
+            "what articles with tag {Tag} i have",
+            "what articles tagged {Tag} i have"
+          ]
+        },
+        {
           "name": "Next",
           "samples": [
             "next"
@@ -46,10 +78,22 @@
         },
         {
           "name": "ReadRandomArticle",
+          "slots": [
+            {
+              "name": "Tag",
+              "type": "TagType"
+            }
+          ],
           "samples": [
             "read me an article",
             "read me a random article",
-            "an article"
+            "an article",
+            "read me an article with tag {Tag}",
+            "read me an article tagged {Tag}",
+            "read me a random article with tag {Tag}",
+            "read me a random article tagged {Tag}",
+            "an article with tag {Tag}",
+            "an article tagged {Tag}"
           ]
         },
         {
@@ -78,6 +122,34 @@
         },
         {
           "name": "AMAZON.CancelIntent"
+        }
+      ],
+      "types": [
+        {
+          "name": "TagType",
+          "values": [
+            {
+              "id": "",
+              "name": {
+                "value": "Alexa",
+                "synonyms": []
+              }
+            },
+            {
+              "id": "",
+              "name": {
+                "value": "Amazon",
+                "synonyms": []
+              }
+            },
+            {
+              "id": "",
+              "name": {
+                "value": "Echo",
+                "synonyms": []
+              }
+            }
+          ]
         }
       ]
     }
