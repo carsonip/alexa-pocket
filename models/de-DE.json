@@ -21,6 +21,36 @@
           ]
         },
         {
+          "name": "RetrieveWithTag",
+          "slots": [
+            {
+              "name": "Tag",
+              "type": "TagType"
+            }
+          ],
+          "samples": [
+            "abrufen mit Schlagwort {Tag}",
+            "gib mir meine Liste der gespeicherten Artikel mit dem Schlagwort {Tag}",
+            "gib mir eine Liste der gespeicherten Artikel mit Schlagwort {Tag}",
+            "rufe meine Liste gespeicherter Artikel mit Schlagwort {Tag} ab",
+            "rufe meine Liste an Artikeln mit Schlagwort {Tag} ab",
+            "gib mir meine Liste gespeicherter Artikel mit Schlagwort {Tag}",
+            "gib mir meine Liste von Artikeln mit Schlagwort {Tag}",
+            "rufe meine Liste an Artikeln mit Schlagwort {Tag} ab",
+            "meine Liste gespeicherter Artikel mit Schlagwort {Tag}",
+            "meine Liste gespeicherter Artikel verschlagwortet mit {Tag}",
+            "meine Liste an Artikeln mit Schlagwort {Tag}",
+            "meine Liste an Artikeln verschlagwortet mit {Tag}",
+            "meine Artikel mit Schlagwort {Tag}",
+            "meine Artikel verschlagwortet mit {Tag}",
+            "rufe meine Artikel mit Schlagwort {Tag} ab",
+            "rufe meine Artikel verschlagwortet mit {Tag} ab",
+            "welche Artikel mit Schlagwort {Tag} habe ich",
+            "welche Artikel verschlagwortet mit {Tag} habe ich",
+            "welche Artikel verschlagwortet {Tag} habe ich"
+          ]
+        },
+        {
           "name": "Next",
           "samples": [
             "weiter",
@@ -53,7 +83,13 @@
             "lies einen zufälligen Artikel",
             "ein Artikel",
             "einen Artikel",
-            "nach einem Artikel"
+            "nach einem Artikel",
+            "lies mir einen Artikel mit Schlagwort {Tag}",
+            "lies mir einen Artikel verschlagwortet mit {Tag}",
+            "lies mir einen zufälligen Artikel mit Schlagwort {Tag}",
+            "lies mir einen zufälligen Artikel verschlagwortet {Tag}",
+            "einen Artikel mit Schlagwort {Tag}",
+            "einen Artikel verschlagwortet mit {Tag}"
           ]
         },
         {
