@@ -39,7 +39,7 @@ function archive() {
 
     pocket.archive(this.event.session.user.accessToken, currentArticle.item_id)
         .then((response) => {
-            this.emit(':tell', this.t('ARCHIVED'));
+            this.emit(':ask', this.t('ARCHIVED') + this.t('ARTICLE_FINISH_REPROMPT'), this.t('ARTICLE_FINISH_REPROMPT'));
         })
         .catch((error) => {
             this.emit(':tell', this.t('POCKET_ERROR'));
