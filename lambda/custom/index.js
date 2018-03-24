@@ -17,14 +17,6 @@ const states = {
 
 const languageStrings = require('./language-strings.json');
 
-exports.handler = function (event, context, callback) {
-    var alexa = Alexa.handler(event, context);
-    alexa.APP_ID = APP_ID;
-    alexa.resources = languageStrings;
-    alexa.registerHandlers(handlers, readingHandlers, finishReadingHandlers);
-    alexa.execute();
-};
-
 function linkAccount() {
     this.emit(':tellWithLinkAccountCard', this.t('LINK_ACCOUNT'));
 }
@@ -253,7 +245,7 @@ function readNextArticle() {
 
 }
 
-var handlers = {
+let handlers = {
     'LaunchRequest': function () {
         this.emit('Retrieve');
     },
@@ -283,9 +275,7 @@ var handlers = {
         archive.call(this);
     },
     'AMAZON.HelpIntent': function () {
-        var speechOutput = this.t('HELP');
-        var reprompt = this.t('HELP_REPROMPT');
-        this.emit(':ask', speechOutput, reprompt);
+        this.emit(':ask', this.t('HELP'), this.t('HELP_REPROMPT'));
     },
     'AMAZON.CancelIntent': function () {
         this.emit(':tell', this.t('GOODBYE'));
@@ -295,7 +285,7 @@ var handlers = {
     }
 };
 
-var readingHandlers = Alexa.CreateStateHandler(states.READING, Object.assign({}, handlers, {
+let readingHandlers = Alexa.CreateStateHandler(states.READING, Object.assign({}, handlers, {
     'AMAZON.YesIntent': function () {
         readChunk.call(this);
     },
@@ -307,8 +297,16 @@ var readingHandlers = Alexa.CreateStateHandler(states.READING, Object.assign({},
     },
 }));
 
-var finishReadingHandlers = Alexa.CreateStateHandler(states.FINISH_READING, Object.assign({}, handlers, {
+let finishReadingHandlers = Alexa.CreateStateHandler(states.FINISH_READING, Object.assign({}, handlers, {
     'Next': function () {
         readNextArticle.call(this);
     },
 }));
+
+exports.handler = function (event, context, callback) {
+    let alexa = Alexa.handler(event, context);
+    alexa.APP_ID = APP_ID;
+    alexa.resources = languageStrings;
+    alexa.registerHandlers(handlers, readingHandlers, finishReadingHandlers);
+    alexa.execute();
+};
