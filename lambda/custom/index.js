@@ -39,6 +39,78 @@ function archive() {
         });
 }
 
+function unarchive() {
+    if (this.event.session.user.accessToken == undefined) {
+        linkAccount.call(this);
+        return;
+    }
+    let list = utils.decompress(this.attributes['list']);
+    let currentArticle = list[this.attributes['currentIndex']];
+
+    pocket.unarchive(this.event.session.user.accessToken, currentArticle.item_id)
+        .then((response) => {
+            this.emit(':ask', this.t('UNARCHIVED') + this.t('ARTICLE_FINISH_REPROMPT'), this.t('ARTICLE_FINISH_REPROMPT'));
+        })
+        .catch((error) => {
+            this.emit(':tell', this.t('POCKET_ERROR'));
+            console.log(error);
+        });
+}
+
+function favorite() {
+    if (this.event.session.user.accessToken == undefined) {
+        linkAccount.call(this);
+        return;
+    }
+    let list = utils.decompress(this.attributes['list']);
+    let currentArticle = list[this.attributes['currentIndex']];
+
+    pocket.favorite(this.event.session.user.accessToken, currentArticle.item_id)
+        .then((response) => {
+            this.emit(':ask', this.t('FAVORITED') + this.t('ARTICLE_FINISH_REPROMPT'), this.t('ARTICLE_FINISH_REPROMPT'));
+        })
+        .catch((error) => {
+            this.emit(':tell', this.t('POCKET_ERROR'));
+            console.log(error);
+        });
+}
+
+function unfavorite() {
+    if (this.event.session.user.accessToken == undefined) {
+        linkAccount.call(this);
+        return;
+    }
+    let list = utils.decompress(this.attributes['list']);
+    let currentArticle = list[this.attributes['currentIndex']];
+
+    pocket.unfavorite(this.event.session.user.accessToken, currentArticle.item_id)
+        .then((response) => {
+            this.emit(':ask', this.t('UNFAVORITED') + this.t('ARTICLE_FINISH_REPROMPT'), this.t('ARTICLE_FINISH_REPROMPT'));
+        })
+        .catch((error) => {
+            this.emit(':tell', this.t('POCKET_ERROR'));
+            console.log(error);
+        });
+}
+
+function itemDelete() {
+    if (this.event.session.user.accessToken == undefined) {
+        linkAccount.call(this);
+        return;
+    }
+    let list = utils.decompress(this.attributes['list']);
+    let currentArticle = list[this.attributes['currentIndex']];
+
+    pocket.delete(this.event.session.user.accessToken, currentArticle.item_id)
+        .then((response) => {
+            this.emit(':ask', this.t('DELETED') + this.t('ARTICLE_FINISH_REPROMPT'), this.t('ARTICLE_FINISH_REPROMPT'));
+        })
+        .catch((error) => {
+            this.emit(':tell', this.t('POCKET_ERROR'));
+            console.log(error);
+        });
+}
+
 function prepareChunk() {
     let p = new Promise((resolve, reject) => {
         let chunkIndex = this.attributes['chunkIndex'];
@@ -273,6 +345,18 @@ let handlers = {
     },
     'Archive': function () {
         archive.call(this);
+    },
+    'Unarchive': function () {
+        unarchive.call(this);
+    },
+    'Favorite': function () {
+        favorite.call(this);
+    },
+    'Unfavorite': function () {
+        unfavorite.call(this);
+    },
+    'Delete': function () {
+        itemDelete.call(this);
     },
     'AMAZON.HelpIntent': function () {
         this.emit(':ask', this.t('HELP'), this.t('HELP_REPROMPT'));

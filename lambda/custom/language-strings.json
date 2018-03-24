@@ -4,9 +4,13 @@
             "LINK_ACCOUNT": "To start using this skill, please use the companion app to authenticate on Amazon. ",
             "NO_ACTIVE_ARTICLE": "There is no reading article. ",
             "ARCHIVED": "Item archived. ",
+            "UNARCHIVED": "Item unarchived. ",
+            "FAVORITED": "Item favorited. ",
+            "UNFAVORITED": "Item unfavorited. ",
+            "DELETED": "Item deleted. ",
             
-            "ARTICLE_FINISH": "That's all for this article. Say, Archive, or, Next. ",
-            "ARTICLE_FINISH_REPROMPT": "Say, Archive, or, Next. ",
+            "ARTICLE_FINISH": "That's all for this article. Perform an action, or say, Next. ",
+            "ARTICLE_FINISH_REPROMPT": "Perform an action like archive, unarchive, favorite, unfavorite, or delete. Otherwise, say, Next, to read the next in list. ",
             "ARTICLE_NEXT": "Would you like to continue? ",
             "ARTICLE_NEXT_REPROMPT": "Say Yes to continue, or say No to stop. Would you like to continue? ",
 
@@ -17,7 +21,7 @@
             "LIST_TAG_START": "Here are %s of your saved articles in Pocket with tag %s: ",
             "LIST_NEXT": "Here are the next %s: ",
 
-            "HELP": "When you say, Alexa, ask My Pocket what articles do I have, it will read you the 5 latest articles you saved. Then you may say a number, and it will read the corresponding article to you. After finish reading the article, you may archive the article. If you want to link or re-link to your account, say, Alexa, ask My Pocket to link account. Now, you can say, Start, to begin, or you can say, Stop. ",
+            "HELP": "When you say, Alexa, ask My Pocket what articles do I have, it will read you the 5 latest articles you saved. Then you may say a number, and it will read the corresponding article to you. After finish reading the article, you may perform an action like archive, unarchive, favorite, unfavorite, or delete, or say, next, to read the next in list. If you want to link or re-link to your account, say, Alexa, ask My Pocket to link account. Now, you can say, Start, to begin, or you can say, Stop. ",
             "HELP_REPROMPT": "Say, Start, to begin, or you can say, Stop. ",
             "GOODBYE": "Goodbye. ",
 

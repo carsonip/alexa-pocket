@@ -32,6 +32,62 @@ function Pocket() {
         return p;
     };
 
+    this.unarchive = function (accessToken, itemId) {
+        let p = instance.post('v3/send', {
+            consumer_key: CONSUMER_KEY,
+            access_token: accessToken,
+            actions: [
+                {
+                    action: 'readd',
+                    item_id: itemId,
+                }
+            ]
+        });
+        return p;
+    };
+
+    this.favorite = function (accessToken, itemId) {
+        let p = instance.post('v3/send', {
+            consumer_key: CONSUMER_KEY,
+            access_token: accessToken,
+            actions: [
+                {
+                    action: 'favorite',
+                    item_id: itemId,
+                }
+            ]
+        });
+        return p;
+    };
+
+    this.unfavorite = function (accessToken, itemId) {
+        let p = instance.post('v3/send', {
+            consumer_key: CONSUMER_KEY,
+            access_token: accessToken,
+            actions: [
+                {
+                    action: 'unfavorite',
+                    item_id: itemId,
+                }
+            ]
+        });
+        return p;
+    };
+
+    this.delete = function (accessToken, itemId) {
+        let p = instance.post('v3/send', {
+            consumer_key: CONSUMER_KEY,
+            access_token: accessToken,
+            actions: [
+                {
+                    action: 'delete',
+                    item_id: itemId,
+                }
+            ]
+        });
+        return p;
+    };
+
     this.getList = function (accessToken, count, offset, tag) {
 
         offset = offset || 0;
