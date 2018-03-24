@@ -17,21 +17,27 @@ const states = {
 
 const languageStrings = require('./language-strings.json');
 
+function accessTokenExist() {
+    if (this.event.session.user.accessToken == undefined) {
+        linkAccount.call(this);
+        return false;
+    }
+    return true;
+}
+
 function linkAccount() {
     this.emit(':tellWithLinkAccountCard', this.t('LINK_ACCOUNT'));
 }
 
 function archive() {
-    if (this.event.session.user.accessToken == undefined) {
-        linkAccount.call(this);
-        return;
-    }
+    if (!accessTokenExist.call(this)) return;
+
     let list = utils.decompress(this.attributes['list']);
     let currentArticle = list[this.attributes['currentIndex']];
 
     pocket.archive(this.event.session.user.accessToken, currentArticle.item_id)
         .then((response) => {
-            this.emit(':ask', this.t('ARCHIVED') + this.t('ARTICLE_FINISH_REPROMPT'), this.t('ARTICLE_FINISH_REPROMPT'));
+            this.emit(':ask', this.t('ARCHIVED') + this.t('ARTICLE_FINISH'), this.t('ARTICLE_FINISH_REPROMPT'));
         })
         .catch((error) => {
             this.emit(':tell', this.t('POCKET_ERROR'));
@@ -40,16 +46,14 @@ function archive() {
 }
 
 function unarchive() {
-    if (this.event.session.user.accessToken == undefined) {
-        linkAccount.call(this);
-        return;
-    }
+    if (!accessTokenExist.call(this)) return;
+
     let list = utils.decompress(this.attributes['list']);
     let currentArticle = list[this.attributes['currentIndex']];
 
     pocket.unarchive(this.event.session.user.accessToken, currentArticle.item_id)
         .then((response) => {
-            this.emit(':ask', this.t('UNARCHIVED') + this.t('ARTICLE_FINISH_REPROMPT'), this.t('ARTICLE_FINISH_REPROMPT'));
+            this.emit(':ask', this.t('UNARCHIVED') + this.t('ARTICLE_FINISH'), this.t('ARTICLE_FINISH_REPROMPT'));
         })
         .catch((error) => {
             this.emit(':tell', this.t('POCKET_ERROR'));
@@ -58,16 +62,14 @@ function unarchive() {
 }
 
 function favorite() {
-    if (this.event.session.user.accessToken == undefined) {
-        linkAccount.call(this);
-        return;
-    }
+    if (!accessTokenExist.call(this)) return;
+
     let list = utils.decompress(this.attributes['list']);
     let currentArticle = list[this.attributes['currentIndex']];
 
     pocket.favorite(this.event.session.user.accessToken, currentArticle.item_id)
         .then((response) => {
-            this.emit(':ask', this.t('FAVORITED') + this.t('ARTICLE_FINISH_REPROMPT'), this.t('ARTICLE_FINISH_REPROMPT'));
+            this.emit(':ask', this.t('FAVORITED') + this.t('ARTICLE_FINISH'), this.t('ARTICLE_FINISH_REPROMPT'));
         })
         .catch((error) => {
             this.emit(':tell', this.t('POCKET_ERROR'));
@@ -76,16 +78,14 @@ function favorite() {
 }
 
 function unfavorite() {
-    if (this.event.session.user.accessToken == undefined) {
-        linkAccount.call(this);
-        return;
-    }
+    if (!accessTokenExist.call(this)) return;
+
     let list = utils.decompress(this.attributes['list']);
     let currentArticle = list[this.attributes['currentIndex']];
 
     pocket.unfavorite(this.event.session.user.accessToken, currentArticle.item_id)
         .then((response) => {
-            this.emit(':ask', this.t('UNFAVORITED') + this.t('ARTICLE_FINISH_REPROMPT'), this.t('ARTICLE_FINISH_REPROMPT'));
+            this.emit(':ask', this.t('UNFAVORITED') + this.t('ARTICLE_FINISH'), this.t('ARTICLE_FINISH_REPROMPT'));
         })
         .catch((error) => {
             this.emit(':tell', this.t('POCKET_ERROR'));
@@ -94,16 +94,14 @@ function unfavorite() {
 }
 
 function itemDelete() {
-    if (this.event.session.user.accessToken == undefined) {
-        linkAccount.call(this);
-        return;
-    }
+    if (!accessTokenExist.call(this)) return;
+
     let list = utils.decompress(this.attributes['list']);
     let currentArticle = list[this.attributes['currentIndex']];
 
     pocket.delete(this.event.session.user.accessToken, currentArticle.item_id)
         .then((response) => {
-            this.emit(':ask', this.t('DELETED') + this.t('ARTICLE_FINISH_REPROMPT'), this.t('ARTICLE_FINISH_REPROMPT'));
+            this.emit(':ask', this.t('DELETED') + this.t('ARTICLE_FINISH'), this.t('ARTICLE_FINISH_REPROMPT'));
         })
         .catch((error) => {
             this.emit(':tell', this.t('POCKET_ERROR'));
@@ -184,10 +182,7 @@ function readChunk(before) {
 }
 
 function readList(count, offset, tag) {
-    if (this.event.session.user.accessToken == undefined) {
-        linkAccount.call(this);
-        return;
-    }
+    if (!accessTokenExist.call(this)) return;
 
     let next = offset > 0;
 
@@ -228,10 +223,8 @@ function readList(count, offset, tag) {
 }
 
 function readRandomArticle(tag) {
-    if (this.event.session.user.accessToken == undefined) {
-        linkAccount.call(this);
-        return;
-    }
+    if (!accessTokenExist.call(this)) return;
+
     pocket.getList(this.event.session.user.accessToken, 10, 0, tag)
         .then((list) => {
             this.attributes['list'] = utils.compress(list.map(utils.filterMetadata));
@@ -247,10 +240,7 @@ function readRandomArticle(tag) {
 }
 
 function readArticleFromIndex(index) {
-    if (this.event.session.user.accessToken == undefined) {
-        linkAccount.call(this);
-        return;
-    }
+    if (!accessTokenExist.call(this)) return;
 
     let list = utils.decompress(this.attributes['list']);
     
@@ -283,10 +273,8 @@ function readArticleFromIndex(index) {
 }
 
 function readNextArticle() {
-    if (this.event.session.user.accessToken == undefined) {
-        linkAccount.call(this);
-        return;
-    }
+    if (!accessTokenExist.call(this)) return;
+
     let list = utils.decompress(this.attributes['list']);
     
     if (!list) {
