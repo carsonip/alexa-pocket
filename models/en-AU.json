@@ -64,6 +64,30 @@
           ]
         },
         {
+          "name": "Unarchive",
+          "samples": [
+            "unarchive"
+          ]
+        },
+        {
+          "name": "Favorite",
+          "samples": [
+            "favorite"
+          ]
+        },
+        {
+          "name": "Unfavorite",
+          "samples": [
+            "unfavorite"
+          ]
+        },
+        {
+          "name": "Delete",
+          "samples": [
+            "delete"
+          ]
+        },
+        {
           "name": "ReadArticleFromIndex",
           "slots": [
             {
