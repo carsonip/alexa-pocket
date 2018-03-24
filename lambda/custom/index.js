@@ -311,7 +311,4 @@ var finishReadingHandlers = Alexa.CreateStateHandler(states.FINISH_READING, Obje
     'Next': function () {
         readNextArticle.call(this);
     },
-    'Archive': function () {
-        this.emit('Archive');
-    },
 }));
