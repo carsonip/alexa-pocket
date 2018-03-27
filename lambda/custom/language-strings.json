@@ -36,9 +36,13 @@
             "LINK_ACCOUNT": "Um diesen Skill verwenden zu können, starte bitte die Alexa App und verknüpfe deinen Pocket Account. ",
             "NO_ACTIVE_ARTICLE": "Es gibt leider keinen Artikel. ",
             "ARCHIVED": "Artikel archiviert. ",
+            "UNARCHIVED": "Artikel aus Archiv wiederhergestellt. ",
+            "FAVORITED": "Artikel als Favorit markiert. ",
+            "UNFAVORITED": "Artikel als Favorit entfernt. ",
+            "DELETED": "Artikel gelöscht. ",
             
-            "ARTICLE_FINISH": "Du hast das Ende des Artikels erreicht. Sage, archivieren, oder, weiter. ",
-            "ARTICLE_FINISH_REPROMPT": "Sage, archivieren, oder, weiter. ",
+            "ARTICLE_FINISH": "Du hast das Ende des Artikels erreicht. Führe eine Aktion aus, oder sage, weiter. ",
+            "ARTICLE_FINISH_REPROMPT": "Führe eine Aktion aus wie archivieren, aus Archiv wiederherstellen, als Favorit markieren, als Favorit entfernen, or löschen. Alternativ, sage, weiter, um den nächsten Artikel in der Liste vorzulesen. ", 
             "ARTICLE_NEXT": "Möchtest du fortfahren? ",
             "ARTICLE_NEXT_REPROMPT": "Sage ja um fortzufahren, oder sage nein um zu stoppen. Möchtest du fortfahren? ",
 
@@ -50,7 +54,7 @@
             "LIST_NEXT": "Hier sind die nächsten %s: ",
             "LIST_PROMPT": "Welchen würdest du gerne hören? Sag die Nummer oder sage weiter. ",
 
-            "HELP": "Wenn du sagst, Alexa, frage My Pocket welche Artikel ich habe, werde ich dir die letzten 5 gespeicherten Artikel vorlesen. Dann kannst du eine Zahl sagen und ich werde dir den entsprechenden Artikel vorlesen. Nachdem ich den Artikel vorgelesen habe kannst du ihn archivieren. Wenn du deinen Account verknüpfen willst, sage Alexa, öffne My Pocket und verknüpfe meinen Account. Jetzt sage, Start, um zu beginnen, oder sage Stop. ",
+            "HELP": "Wenn du sagst, Alexa, frage My Pocket welche Artikel ich habe, werde ich dir die letzten 5 gespeicherten Artikel vorlesen. Dann kannst du eine Zahl sagen und ich werde dir den entsprechenden Artikel vorlesen. Nachdem ich den Artikel vorgelesen habe kannst du ihn archivieren, aus Archiv wiederherstellen, als Favorit markieren, als Favorit entfernen, or löschen. Alternativ, sage, weiter, um den nächsten Artikel in der Liste vorzulesen. Wenn du deinen Account verknüpfen willst, sage Alexa, öffne My Pocket und verknüpfe meinen Account. Jetzt sage, Start, um zu beginnen, oder sage Stop. ",
             "HELP_REPROMPT": "Sage Start, um zu beginnen, oder sage Stop. ",
             "GOODBYE": "Auf Wiedersehen. ",
 
