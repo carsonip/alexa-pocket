@@ -64,6 +64,30 @@
           ]
         },
         {
+          "name": "Unarchive",
+          "samples": [
+            "aus Archiv wiederherstellen"
+          ]
+        },
+        {
+          "name": "Favorite",
+          "samples": [
+            "als Favorit markieren"
+          ]
+        },
+        {
+          "name": "Unfavorite",
+          "samples": [
+            "als Favorit entfernen"
+          ]
+        },
+        {
+          "name": "Delete",
+          "samples": [
+            "löschen"
+          ]
+        },
+        {
           "name": "ReadArticleFromIndex",
           "slots": [
             {
