@@ -20,6 +20,7 @@
             "LIST_START": "Here are %s of your saved articles in Pocket: ",
             "LIST_TAG_START": "Here are %s of your saved articles in Pocket with tag %s: ",
             "LIST_NEXT": "Here are the next %s: ",
+            "LIST_PROMPT": "Which one would you like to read? Say the number, or say, next, to read the next in list. ",
 
             "HELP": "When you say, Alexa, ask My Pocket what articles do I have, it will read you the 5 latest articles you saved. Then you may say a number, and it will read the corresponding article to you. After finish reading the article, you may perform an action like archive, unarchive, favorite, unfavorite, or delete, or say, next, to read the next in list. If you want to link or re-link to your account, say, Alexa, ask My Pocket to link account. Now, you can say, Start, to begin, or you can say, Stop. ",
             "HELP_REPROMPT": "Say, Start, to begin, or you can say, Stop. ",
