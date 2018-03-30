@@ -316,7 +316,11 @@ let handlers = {
         readList.call(this, RETURN_COUNT, 0);
     },
     'RetrieveWithTag': function () {
-        readList.call(this, RETURN_COUNT, 0, this.event.request.intent.slots.Tag.value.toLowerCase());
+        let tag = this.event.request.intent.slots.Tag;
+        if (tag && tag.value) {
+            tag = tag.value.toLowerCase();
+        }
+        readList.call(this, RETURN_COUNT, 0, tag);
     },
     'Next': function () {
         readList.call(this, RETURN_COUNT, this.attributes['retrieveOffset'], this.attributes['tag']);
@@ -326,7 +330,7 @@ let handlers = {
     },
     'ReadRandomArticle': function () {
         let tag = this.event.request.intent.slots.Tag;
-        if (tag) {
+        if (tag && tag.value) {
             tag = tag.value.toLowerCase();
         }
         readRandomArticle.call(this, tag)
