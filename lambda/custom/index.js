@@ -114,7 +114,7 @@ function prepareChunk() {
         let chunkIndex = this.attributes['chunkIndex'];
         let chunks = utils.decompress(this.attributes['chunks']);
         if (chunks && chunkIndex < chunks.length) { // The chunk is stored
-            resolve('');
+            resolve(null);
             return;
         }
         let list = utils.decompress(this.attributes['list']);
@@ -145,7 +145,7 @@ function prepareChunk() {
                 this.attributes['chunksLength'] = chunksLength;
 
                 this.handler.state = states.READING;
-                resolve(data.info);
+                resolve(data.metadata);
             })
             .catch((error) => {
                 this.emit(':tell', this.t('POCKET_ERROR'));
@@ -158,9 +158,9 @@ function prepareChunk() {
 function readChunk(before) {
     before = before || '';
 
-    prepareChunk.call(this).then((info) => {
-        if (this.attributes['chunkIndex'] == 0) {
-            before += info || '';
+    prepareChunk.call(this).then((metadata) => {
+        if (this.attributes['chunkIndex'] == 0 && metadata) {
+            before += utils.getArticleMetadataSsml(metadata) || '';
         }
         let chunks = utils.decompress(this.attributes['chunks']);
         let speechOutput = before + chunks[this.attributes['chunkIndex']];

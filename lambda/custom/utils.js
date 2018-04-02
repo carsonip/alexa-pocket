@@ -15,19 +15,29 @@ function objToArr(obj) {
     return Object.keys(obj).map((k) => obj[k]);
 }
 
-function getArticleInfo(data) {
+function getArticleMetadata(data) {
+    return {
+        title: data.title,
+        authors: objToArr(data.authors).map((author) => author.name),
+        time: data.timePublished
+    }
+}
+
+function getArticleMetadataSsml(metadata) {
     let info = '';
 
     // title
-    info += ssmlEscape(data.title) + '<break strength="x-strong"/>';
+    info += ssmlEscape(metadata.title) + '<break strength="x-strong"/>';
 
     // author
-    let authors = objToArr(data.authors).map((author) => author.name).map(ssmlEscape);
+    let authors = metadata.authors.map(ssmlEscape);
     if (authors.length > 0) info += 'by ' + authors.join(',') + '<break strength="x-strong"/>';
 
     // date
-    // "datePublished": "2012-03-05 00:00:00"
-    info += `<say-as interpret-as="date" format="ymd">${data.datePublished.substr(0, 10).replace(/-/g, '')}</say-as><break time="1s"/>`;
+    // metadata.time is UNIX timestamp
+    let date = new Date(metadata.time * 1000);
+    let dateStr = `${date.getFullYear()}${('0' + (date.getMonth()+1)).slice(-2)}${('0' + date.getDate()).slice(-2)}`;
+    info += `<say-as interpret-as="date" format="ymd">${dateStr}</say-as><break time="1s"/>`;
 
     return info;
 }
@@ -107,7 +117,8 @@ exports.ssmlEscape = ssmlEscape;
 exports.objToArr = objToArr;
 exports.getParagraphs = getParagraphs;
 exports.divideContent = divideContent;
-exports.getArticleInfo = getArticleInfo;
+exports.getArticleMetadata = getArticleMetadata;
+exports.getArticleMetadataSsml = getArticleMetadataSsml;
 exports.filterMetadata = filterMetadata;
 exports.compress = compress;
 exports.decompress = decompress;
