@@ -50,12 +50,26 @@ function getArticleMetadataSsml(metadata) {
 
 function getParagraphs(article) {
     const $ = cheerio.load(article);
+    // The article looks like this:
+    // <div><p>...</p><ol><li>...</li><li>...</li></ol><pre>...<code>...</code></pre></div>
+    // We only extract the text of children of root div. Perform special handling for lists.
+    let paragraphs = [];
+    $.root().children().children().each((i, e) => {
+        if (e.name === 'ol') {
+            $(e).children().each((j, el) => {
+                paragraphs.push(`${j + 1}: ${$(el).text()}`);
+            })
+        } else if (e.name === 'ul') {
+            $(e).children().each((j, el) => {
+                paragraphs.push($(el).text());
+            })
+        } else {
+            paragraphs.push($(e).text())
+        }
+    });
 
-    let paragraphs = $('p').map(function () {
-        return $(this).text();
-    }).get();
-
-    return paragraphs;
+    // Remove empty elements
+    return paragraphs.filter(x => x);
 }
 
 function divideContent(paragraphs) {
