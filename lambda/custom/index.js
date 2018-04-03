@@ -160,7 +160,7 @@ function readChunk(before) {
 
     prepareChunk.call(this).then((metadata) => {
         if (this.attributes['chunkIndex'] == 0 && metadata) {
-            before += utils.getArticleMetadataSsml(metadata) || '';
+            before += utils.getArticleMetadataSsml.call(this, metadata) || '';
         }
         let chunks = utils.decompress(this.attributes['chunks']);
         let speechOutput = before + chunks[this.attributes['chunkIndex']];

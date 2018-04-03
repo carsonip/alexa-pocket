@@ -33,7 +33,7 @@ function getArticleMetadataSsml(metadata) {
 
     // author
     let authors = metadata.authors.map(ssmlEscape);
-    if (authors.length > 0) info += 'by ' + authors.join(',') + '<break strength="x-strong"/>';
+    if (authors.length > 0) info += this.t('BY') + ' ' + authors.join(',') + '<break strength="x-strong"/>';
 
     // date
     // metadata.time is UNIX timestamp

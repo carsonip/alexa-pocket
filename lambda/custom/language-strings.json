@@ -29,7 +29,9 @@
             "POCKET_ERROR": "Error accessing Pocket. ",
             "NO_LIST_ERROR": "No list. ",
             "INVALID_NUMBER_ERROR": "Invalid number. ",
-            "INVALID_ITEM_ERROR": "Invalid item. "
+            "INVALID_ITEM_ERROR": "Invalid item. ",
+
+            "BY": "by"
         }
     },
     "de-DE": {
@@ -62,7 +64,9 @@
             "POCKET_ERROR": "Fehler beim Zugriff auf Pocket. ",
             "NO_LIST_ERROR": "Keine Liste. ",
             "INVALID_NUMBER_ERROR": "Ungültige Nummer. ",
-            "INVALID_ITEM_ERROR": "Ungültiger Artikel. "
+            "INVALID_ITEM_ERROR": "Ungültiger Artikel. ",
+
+            "BY": "von"
         }
     }
 }
