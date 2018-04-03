@@ -19,7 +19,9 @@ function getArticleMetadata(data) {
     return {
         title: data.title,
         authors: objToArr(data.authors).map((author) => author.name),
-        time: data.timePublished
+        // Workaround for invalid time input
+        // "datePublished": "0000-00-00 00:00:00", "timePublished": -62169962400,
+        time: data.datePublished === '0000-00-00 00:00:00' ? null : data.timePublished
     }
 }
 
@@ -35,9 +37,13 @@ function getArticleMetadataSsml(metadata) {
 
     // date
     // metadata.time is UNIX timestamp
-    let date = new Date(metadata.time * 1000);
-    let dateStr = `${date.getFullYear()}${('0' + (date.getMonth()+1)).slice(-2)}${('0' + date.getDate()).slice(-2)}`;
-    info += `<say-as interpret-as="date" format="ymd">${dateStr}</say-as><break time="1s"/>`;
+    if (metadata.time !== null) {
+        let date = new Date(metadata.time * 1000);
+        let dateStr = `${date.getFullYear()}${('0' + (date.getMonth()+1)).slice(-2)}${('0' + date.getDate()).slice(-2)}`;
+        info += `<say-as interpret-as="date" format="ymd">${dateStr}</say-as><break strength="x-strong"/>`;
+    }
+
+    info += '<break time="1s"/>';
 
     return info;
 }
