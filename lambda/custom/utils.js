@@ -59,25 +59,18 @@ function getParagraphs(article) {
 }
 
 function divideContent(paragraphs) {
-    const divider = '<break strength="x-strong"/>';
+    // Return a nested list of paragraphs
     let chunks = [];
-    // every chunk ends with divider
-    paragraphs.reduce((prev, para, i) => {
-        if (getByteLen(prev + para + divider) < MAX_PARAGRAPH_SIZE) {
-            if (i == paragraphs.length - 1) {
-                chunks.push(prev + para + divider);
-                return '';
-            }
-            return prev + para + divider;
+    let last = paragraphs.reduce((prev, para, i) => {
+        if (getByteLen(prev.join('') + para) < MAX_PARAGRAPH_SIZE) {
+            prev.push(para)
+            return prev;
         } else {
             chunks.push(prev);
-            if (i == paragraphs.length - 1) {
-                chunks.push(para + divider);
-                return '';
-            }
-            return para;
+            return [para];
         }
-    }, '');
+    }, []);
+    chunks.push(last);
     return chunks;
 }
 

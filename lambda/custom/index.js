@@ -126,13 +126,13 @@ function prepareChunk() {
                 let chunksLength = data.chunks.length;
                 let cumulativeSize = [0]; // 1-based
                 for (let i = 0; i < chunksLength; i++) {
-                    cumulativeSize.push(utils.getByteLen(data.chunks[i]) + cumulativeSize[i]);
+                    cumulativeSize.push(utils.getByteLen(data.chunks[i].join('')) + cumulativeSize[i]);
                 }
 
                 let storeChunks = [];
                 for (let i = 0; i < chunksLength; i++) {
                     if (i < chunkIndex) {
-                        storeChunks.push('');
+                        storeChunks.push(null);
                     } else {
                         if (cumulativeSize[i + 1] - cumulativeSize[chunkIndex] < MAX_CHUNKS_CONTENT_SIZE) {
                             storeChunks.push(data.chunks[i]);
@@ -163,7 +163,9 @@ function readChunk(before) {
             before += utils.getArticleMetadataSsml.call(this, metadata) || '';
         }
         let chunks = utils.decompress(this.attributes['chunks']);
-        let speechOutput = before + chunks[this.attributes['chunkIndex']];
+        // Chunks are arrays of arrays
+        // We get the current chunk, SSML escape all of the paragraphs in it, then merge them.
+        let speechOutput = before + chunks[this.attributes['chunkIndex']].map(utils.ssmlEscape).join('<break time="1s"/>');
         this.attributes['chunkIndex']++;
     
         let reprompt;
