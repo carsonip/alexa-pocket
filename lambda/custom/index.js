@@ -1,5 +1,7 @@
 'use strict';
 const Alexa = require('alexa-sdk');
+const makeRichText = Alexa.utils.TextUtils.makeRichText;
+const makePlainText = Alexa.utils.TextUtils.makePlainText;
 const APP_ID = process.env.APP_ID;  // TODO replace with your app ID (OPTIONAL).
 const utils = require('./utils.js');
 const pocket = require('./pocket.js').create();
@@ -8,6 +10,8 @@ const RETURN_COUNT = 5;
 // Total number of bytes to store in this batch of chunks
 // This is to workaround the 24KB response size limit
 const MAX_CHUNKS_CONTENT_SIZE = 16 * 1024; 
+
+const TITLE = 'My Pocket';
 
 const states = {
     START: '_START',
@@ -159,13 +163,15 @@ function readChunk(before) {
     before = before || '';
 
     prepareChunk.call(this).then((metadata) => {
-        if (this.attributes['chunkIndex'] == 0 && metadata) {
+        const isFirstChunk = this.attributes['chunkIndex'] === 0;
+        if (isFirstChunk && metadata) {
             before += utils.getArticleMetadataSsml.call(this, metadata) || '';
         }
         let chunks = utils.decompress(this.attributes['chunks']);
         // Chunks are arrays of arrays
         // We get the current chunk, SSML escape all of the paragraphs in it, then merge them.
-        let speechOutput = before + chunks[this.attributes['chunkIndex']].map(utils.ssmlEscape).join('<break time="1s"/>');
+        let chunk = chunks[this.attributes['chunkIndex']];
+        let speechOutput = before + chunk.map(utils.ssmlEscape).join('<break time="1s"/>');
         this.attributes['chunkIndex']++;
     
         let reprompt;
@@ -179,7 +185,34 @@ function readChunk(before) {
             reprompt = this.t('ARTICLE_NEXT_REPROMPT');
         }
     
-        this.emit(':ask', speechOutput, reprompt);
+        if (this.event.context.System.device.supportedInterfaces.Display) {
+            const builder = new Alexa.templateBuilders.BodyTemplate1Builder();
+
+            let text = '';
+            if (isFirstChunk && metadata) {
+                text += `<b>${utils.xmlEscape(metadata.title)}</b><br/>`;
+                if (metadata.authors.length > 0) {
+                    text += `${utils.xmlEscape(metadata.authors.join(', '))}<br/>`;
+                }
+                if (metadata.time !== null) {
+                    let date = new Date(metadata.time * 1000);
+                    text += `${date.getFullYear()}-${('0' + (date.getMonth()+1)).slice(-2)}-${('0' + date.getDate()).slice(-2)}<br/>`;
+                }
+                text += '<br/>';
+            }
+            text += chunk.map(utils.xmlEscape).join('<br/><br/>');
+
+            const template = builder.setTitle(TITLE)
+                .setTextContent(makeRichText(text))
+                .build();
+        
+            this.response.speak(speechOutput)
+                .listen(reprompt)
+                .renderTemplate(template);
+            this.emit(':responseReady');
+        } else {
+            this.emit(':ask', speechOutput, reprompt);
+        }
     })
 }
 
@@ -216,7 +249,26 @@ function readList(count, offset, tag) {
             speechOutput += titlesJoined + `<break time="1s"/>${this.t('LIST_PROMPT')}`;
 
             let reprompt = this.t('LIST_PROMPT');
-            this.emit(':ask', speechOutput, reprompt);
+            if (this.event.context.System.device.supportedInterfaces.Display) {
+
+                let titlesDisplay = titles.reduce((prev, item, i) =>
+                    prev + (i + 1) + ": " + item + '<br/>',
+                    ''
+                );
+
+                const builder = new Alexa.templateBuilders.BodyTemplate1Builder();
+
+                const template = builder.setTitle(TITLE)
+                    .setTextContent(makeRichText(titlesDisplay))
+                    .build();
+            
+                this.response.speak(speechOutput)
+                    .listen(reprompt)
+                    .renderTemplate(template);
+                this.emit(':responseReady');
+            } else {
+                this.emit(':ask', speechOutput, reprompt);
+            }
         })
         .catch((error) => {
             this.emit(':tell', this.t('POCKET_ERROR'));

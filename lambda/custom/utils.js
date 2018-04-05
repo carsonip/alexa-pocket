@@ -11,6 +11,18 @@ function ssmlEscape(speech) {
     return speech;
 }
 
+function xmlEscape(str) {
+    // https://developer.amazon.com/docs/custom-skills/display-interface-reference.html#xml-special-characters
+    str = str.replace(/&/g, '&amp;');
+    str = str.replace(/"/g, '&quot;');
+    str = str.replace(/'/g, '&apos;');
+    str = str.replace(/</g, '&lt;');
+    str = str.replace(/>/g, '&gt;');
+    str = str.replace(/\\/g, `\\`);
+    str = str.replace(/\u00A0/g, '&#160;');
+    return str;
+}
+
 function objToArr(obj) {
     return Object.keys(obj).map((k) => obj[k]);
 }
@@ -127,6 +139,7 @@ function getByteLen(val) {
 }
 
 exports.ssmlEscape = ssmlEscape;
+exports.xmlEscape = xmlEscape;
 exports.objToArr = objToArr;
 exports.getParagraphs = getParagraphs;
 exports.divideContent = divideContent;
