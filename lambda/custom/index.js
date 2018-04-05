@@ -379,6 +379,9 @@ let handlers = {
     'Next': function () {
         readList.call(this, RETURN_COUNT, this.attributes['retrieveOffset'], this.attributes['tag']);
     },
+    'AMAZON.NextIntent': function () {
+        readList.call(this, RETURN_COUNT, this.attributes['retrieveOffset'], this.attributes['tag']);
+    },
     'ReadArticleFromIndex': function () {
         readArticleFromIndex.call(this, this.event.request.intent.slots.Number.value - 1);
     },
@@ -412,7 +415,10 @@ let handlers = {
     },
     'AMAZON.StopIntent': function () {
         this.emit(':tell', this.t('GOODBYE'));
-    }
+    },
+    'AMAZON.PreviousIntent': function () {
+        this.emit(':tell', this.t('NOT_SUPPORTED'));
+    },
 };
 
 let readingHandlers = Alexa.CreateStateHandler(states.READING, Object.assign({}, handlers, {
@@ -425,10 +431,16 @@ let readingHandlers = Alexa.CreateStateHandler(states.READING, Object.assign({},
     'Next': function () {
         readChunk.call(this);
     },
+    'AMAZON.NextIntent': function () {
+        readChunk.call(this);
+    },
 }));
 
 let finishReadingHandlers = Alexa.CreateStateHandler(states.FINISH_READING, Object.assign({}, handlers, {
     'Next': function () {
+        readNextArticle.call(this);
+    },
+    'AMAZON.NextIntent': function () {
         readNextArticle.call(this);
     },
 }));

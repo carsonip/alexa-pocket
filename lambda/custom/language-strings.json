@@ -25,6 +25,7 @@
             "HELP": "When you say, Alexa, ask My Pocket what articles do I have, it will read you the 5 latest articles you saved. Then you may say a number, and it will read the corresponding article to you. After finish reading the article, you may perform an action like archive, unarchive, favorite, unfavorite, or delete, or say, next, to read the next in list. If you want to link or re-link to your account, say, Alexa, ask My Pocket to link account. Now, you can say, Start, to begin, or you can say, Stop. ",
             "HELP_REPROMPT": "Say, Start, to begin, or you can say, Stop. ",
             "GOODBYE": "Goodbye. ",
+            "NOT_SUPPORTED": "Operation not supported. ",
 
             "POCKET_ERROR": "Error accessing Pocket. ",
             "NO_LIST_ERROR": "No list. ",
@@ -60,6 +61,7 @@
             "HELP": "Wenn du sagst, Alexa, frage My Pocket welche Artikel ich habe, werde ich dir die letzten 5 gespeicherten Artikel vorlesen. Dann kannst du eine Zahl sagen und ich werde dir den entsprechenden Artikel vorlesen. Nachdem ich den Artikel vorgelesen habe kannst du ihn archivieren, aus Archiv wiederherstellen, als Favorit markieren, als Favorit entfernen, or löschen. Alternativ, sage, weiter, um den nächsten Artikel in der Liste vorzulesen. Wenn du deinen Account verknüpfen willst, sage Alexa, öffne My Pocket und verknüpfe meinen Account. Jetzt sage, Start, um zu beginnen, oder sage Stop. ",
             "HELP_REPROMPT": "Sage Start, um zu beginnen, oder sage Stop. ",
             "GOODBYE": "Auf Wiedersehen. ",
+            "NOT_SUPPORTED": "Vorgang wird nicht unterstützt. ",
 
             "POCKET_ERROR": "Fehler beim Zugriff auf Pocket. ",
             "NO_LIST_ERROR": "Keine Liste. ",
