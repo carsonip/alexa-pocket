@@ -6,6 +6,7 @@ This skill is an unofficial Alexa skill for Pocket. It is capable of:
 * Retrieving the saved list of articles (with or without tag)
 * Reading the article view of an article
 * Performing actions on an article (Archive, Unarchive, Favorite, Unfavorite, Delete)
+* Displaying the article list and content on Echo Show and other devices with display interface
 
 The skill requires authorization from the user's Pocket account in order to work. That part of the code is not in this repository.
 
