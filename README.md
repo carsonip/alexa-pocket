@@ -8,6 +8,10 @@ This skill is an unofficial Alexa skill for Pocket. It is capable of:
 * Performing actions on an article (Archive, Unarchive, Favorite, Unfavorite, Delete)
 * Displaying the article list and content on Echo Show and other devices with display interface
 
+## Development
+
 The skill requires authorization from the user's Pocket account in order to work. That part of the code is not in this repository.
 
 Pocket Article View API is private. Therefore the corresponding part of the code is stored in `src/pocket-private.js` which is not uploaded to GitHub. Please contact Pocket for access to this API.
+
+To test the code using ask sdk, run `node test.js`.
