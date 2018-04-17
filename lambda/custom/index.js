@@ -252,7 +252,7 @@ function readList(count, offset, tag) {
             if (this.event.context.System.device.supportedInterfaces.Display) {
 
                 let titlesDisplay = titles.reduce((prev, item, i) =>
-                    prev + (i + 1) + ": " + item + '<br/>',
+                    prev + (i + 1) + ": " + item + '<br/><br/>',
                     ''
                 );
 
