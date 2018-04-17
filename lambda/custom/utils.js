@@ -4,11 +4,13 @@ const zlib = require('zlib');
 // e.g. Chinese characters. Although Alexa cannot read Chinese, don't let it crash.
 const MAX_PARAGRAPH_SIZE = 3500; // bytes
 
-function ssmlEscape(speech) {
-    speech = speech.replace(/&/g, ' and ');
-    speech = speech.replace(/</g, '');
-    speech = speech.replace(/"/g, '');
-    return speech;
+function ssmlEscape(str) {
+    str = str.replace(/&/g, ' and ');
+    str = str.replace(/"/g, '');
+    str = str.replace(/</g, '');
+    str = str.replace(/>/g, '');
+    str = str.replace(/\u00A0/g, ' ');
+    return str;
 }
 
 function xmlEscape(str) {
