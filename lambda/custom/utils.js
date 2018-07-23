@@ -1,5 +1,4 @@
 const cheerio = require('cheerio');
-const h2p = require('html2plaintext');
 const zlib = require('zlib');
 // Using size instead of character count to avoid underestimation due to UTF-8 character byte size
 // e.g. Chinese characters. Although Alexa cannot read Chinese, don't let it crash.
@@ -76,7 +75,7 @@ const BLOCK_ELEMENTS = new Set(['address', 'article', 'aside', 'blockquote', 'ca
 function getText($, el) {
     // Recursively get text of element el
     // Block elements are wrapped with linebreaks
-    
+
     let text = '';
     if (el[0].type === 'text') {
         text += $(el).text()
