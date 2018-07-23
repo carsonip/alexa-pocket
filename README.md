@@ -1,5 +1,7 @@
 # My Pocket: Unofficial Pocket Alexa Skill
 
+[![Build Status](https://travis-ci.org/carsonip/alexa-pocket.svg?branch=master)](https://travis-ci.org/carsonip/alexa-pocket)
+
 ### Alexa skill: [My Pocket: Unofficial Pocket Skill](https://www.amazon.com/My-Pocket-Unofficial-Skill/dp/B071KZFKLM)
 
 This skill is an unofficial Alexa skill for Pocket. It is capable of:
