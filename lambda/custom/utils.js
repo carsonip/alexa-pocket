@@ -1,4 +1,5 @@
 const cheerio = require('cheerio');
+const h2p = require('html2plaintext');
 const zlib = require('zlib');
 // Using size instead of character count to avoid underestimation due to UTF-8 character byte size
 // e.g. Chinese characters. Although Alexa cannot read Chinese, don't let it crash.
@@ -64,26 +65,51 @@ function getArticleMetadataSsml(metadata) {
 
 function getParagraphs(article) {
     const $ = cheerio.load(article);
-    // The article looks like this:
-    // <div><p>...</p><ol><li>...</li><li>...</li></ol><pre>...<code>...</code></pre></div>
-    // We only extract the text of children of root div. Perform special handling for lists.
-    let paragraphs = [];
-    $.root().children().children().each((i, e) => {
-        if (e.name === 'ol') {
-            $(e).children().each((j, el) => {
-                paragraphs.push(`${j + 1}: ${$(el).text()}`);
-            })
-        } else if (e.name === 'ul') {
-            $(e).children().each((j, el) => {
-                paragraphs.push($(el).text());
-            })
-        } else {
-            paragraphs.push($(e).text())
-        }
-    });
-
+    let text = getText($, $.root())
+    let paragraphs = text.split('\n');
     // Remove empty elements
     return paragraphs.filter(x => x);
+}
+
+const BLOCK_ELEMENTS = new Set(['address', 'article', 'aside', 'blockquote', 'canvas', 'dd', 'div', 'dl', 'dt', 'fieldset', 'figcaption', 'figure', 'figcaption', 'footer', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'hgroup', 'hr', 'li', 'main', 'nav', 'noscript', 'ol', 'output', 'p', 'pre', 'section', 'table', 'tfoot', 'ul', 'video'])
+
+function getText($, el) {
+    // Recursively get text of element el
+    // Block elements are wrapped with linebreaks
+    
+    let text = '';
+    if (el[0].type === 'text') {
+        text += $(el).text()
+        return text;
+    }
+
+    // Add linebreak before and after block elements
+    // As we only care about the paragraphing,
+    // there is no side effect in this case.
+    let isBlockElement = BLOCK_ELEMENTS.has(el[0].name);
+    if (isBlockElement) {
+        text += '\n';
+    }
+
+    // Special handling for list
+    if (el[0].name === 'ol') {
+        el.children().each(function(i, e) {
+            text += `${i + 1}: ${$(e).text()}\n`;
+        })
+    } else if (el[0].name === 'ul') {
+        el.children().each(function(i, e) {
+            text += $(e).text() + '\n';
+        })
+    } else {
+        el.contents().each(function(i, e) {
+            text += getText($, $(e));
+        });
+    }
+
+    if (isBlockElement) {
+        text += '\n';
+    }
+    return text;
 }
 
 function divideContent(paragraphs) {
@@ -144,6 +170,7 @@ exports.ssmlEscape = ssmlEscape;
 exports.xmlEscape = xmlEscape;
 exports.objToArr = objToArr;
 exports.getParagraphs = getParagraphs;
+exports.getText = getText;
 exports.divideContent = divideContent;
 exports.getArticleMetadata = getArticleMetadata;
 exports.getArticleMetadataSsml = getArticleMetadataSsml;

@@ -14,4 +14,6 @@ The skill requires authorization from the user's Pocket account in order to work
 
 Pocket Article View API is private. Therefore the corresponding part of the code is stored in `src/pocket-private.js` which is not uploaded to GitHub. Please contact Pocket for access to this API.
 
-To test the code using ask sdk, run `node test.js`.
+For unit test, run `mocha`.
+
+To test the code using ask sdk, run `node ask-test.js`.
