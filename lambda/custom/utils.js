@@ -111,15 +111,21 @@ function getText($, el) {
     return text;
 }
 
-function divideContent(paragraphs) {
+function divideContent(paragraphs, maxParagraphSize = MAX_PARAGRAPH_SIZE) {
     // Return a nested list of paragraphs
     let chunks = [];
+    let prevStr = '';  // Cache prev string to avoid quadratic runtime
     let last = paragraphs.reduce((prev, para, i) => {
-        if (getByteLen(prev.join('') + para) < MAX_PARAGRAPH_SIZE) {
-            prev.push(para)
+        if (getByteLen(prevStr + para) <= maxParagraphSize) {
+            // Add current paragraph to current chunk
+            prev.push(para);
+            prevStr += para;
             return prev;
         } else {
-            chunks.push(prev);
+            // Flush prev chunk to chunks if non-empty
+            if (prev.length > 0) chunks.push(prev);
+            // Create a new chunk for current paragraph
+            prevStr = para;
             return [para];
         }
     }, []);
@@ -139,12 +145,12 @@ function filterMetadata(item) {
 }
 
 function compress(obj) {
-    if (!obj) return;
+    if (obj == null) return;  // do not process null and undefined
     return zlib.deflateSync(JSON.stringify(obj)).toString('base64');
 }
 
 function decompress(compressed) {
-    if (!compressed) return;
+    if (compressed == null) return;  // do not process null and undefined
     return JSON.parse(zlib.inflateSync(new Buffer(compressed, 'base64')).toString());
 }
 

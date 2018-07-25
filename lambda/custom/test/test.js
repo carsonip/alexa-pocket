@@ -40,3 +40,44 @@ describe('paragraphing', function () {
         });
     });
 });
+
+describe('compression', function () {
+    describe('compression and decompression', function () {
+        it('should return same content', function () {
+            const text = '<div>foo</div>';
+            assert.deepEqual(utils.decompress(utils.compress(text)), text);
+        });
+    });
+    describe('undefined and null handling', function () {
+        it('should return undefined for undefined and null', function () {
+            assert.deepEqual(utils.compress(undefined), undefined);
+            assert.deepEqual(utils.decompress(undefined), undefined);
+            assert.deepEqual(utils.compress(null), undefined);
+            assert.deepEqual(utils.decompress(null), undefined);
+        });
+    });
+});
+
+describe('chunking', function () {
+    describe('divideContent simple', function () {
+        it('should return 1 chunk', function () {
+            assert.deepEqual(utils.divideContent(['a', 'b'], 2), [['a', 'b']]);
+        });
+    });
+    describe('divideContent divide', function () {
+        it('should return 2 chunks', function () {
+            assert.deepEqual(utils.divideContent(['a', 'b'], 1), [['a'], ['b']]);
+        });
+    });
+    describe('divideContent long paragraph', function () {
+        it('should return 1 chunk', function () {
+            assert.deepEqual(utils.divideContent(['ab', 'cd'], 1), [['ab'], ['cd']]);
+        });
+    });
+    describe('divideContent non-trivial case', function () {
+        it('should return correct chunks', function () {
+            let input = ['abc', 'd', 'ef', 'ghi', 'jklmn', 'o'];
+            assert.deepEqual(utils.divideContent(input, 4), [['abc', 'd'], ['ef'], ['ghi'], ['jklmn'], ['o']]);
+        });
+    });
+});
