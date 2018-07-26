@@ -114,18 +114,19 @@ function getText($, el) {
 function divideContent(paragraphs, maxParagraphSize = MAX_PARAGRAPH_SIZE) {
     // Return a nested list of paragraphs
     let chunks = [];
-    let prevStr = '';  // Cache prev string to avoid quadratic runtime
+    let prevByteLen = 0;  // Cache prev string len to avoid quadratic runtime
     let last = paragraphs.reduce((prev, para, i) => {
-        if (getByteLen(prevStr + para) <= maxParagraphSize) {
+        let paraByteLen = getByteLen(para);
+        if (prevByteLen + paraByteLen <= maxParagraphSize) {
             // Add current paragraph to current chunk
             prev.push(para);
-            prevStr += para;
+            prevByteLen += paraByteLen;
             return prev;
         } else {
             // Flush prev chunk to chunks if non-empty
             if (prev.length > 0) chunks.push(prev);
             // Create a new chunk for current paragraph
-            prevStr = para;
+            prevByteLen = paraByteLen;
             return [para];
         }
     }, []);
