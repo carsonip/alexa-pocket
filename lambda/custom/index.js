@@ -419,6 +419,7 @@ let handlers = {
     'AMAZON.PreviousIntent': function () {
         this.emit(':tell', this.t('NOT_SUPPORTED'));
     },
+    'SessionEndedRequest': function () {},
 };
 
 let readingHandlers = Alexa.CreateStateHandler(states.READING, Object.assign({}, handlers, {
